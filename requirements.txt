@@ -1,0 +1,6 @@
+pytest
+flake8
+sphinx
+sphinx_rtd_theme
+paho_mqtt
+webcolors

@@ -1,0 +1,14 @@
+name: bl_api
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python>=3.10
+  - pip
+  - pytest
+  - sphinx
+  - sphinx_rtd_theme
+  - flake8
+  - webcolors
+  - pip:
+    - paho_mqtt

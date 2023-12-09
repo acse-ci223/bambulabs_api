@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "parally"
+version = "1.3.0"
+authors = [
+  { name="Chris Ioannidis", email="chris.ioannidis23@imperial.ac.uk" },
+]
+description = "Distributed computing over networks"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/acse-ci223/parally"
+Docs = "https://acse-ci223.github.io/parally/"
+Issues = "https://github.com/acse-ci223/parally/issues"
