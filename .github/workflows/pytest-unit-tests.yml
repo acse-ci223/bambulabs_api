@@ -1,0 +1,35 @@
+name: Package Pytest
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  pytest:
+    name: unit testing
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout acsefunctions
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v1
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -e .
+        pip install -r requirements.txt
+
+    - name: Test with pytest
+      run: |
+        pytest tests/
