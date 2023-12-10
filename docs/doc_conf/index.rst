@@ -9,6 +9,6 @@ including the status of the printer and the status of the print job.
 
 Client
 ======
-.. automodule:: bambulabs_api
+.. automodule:: bambulabs_api.Client
   :members:
   :imported-members:
