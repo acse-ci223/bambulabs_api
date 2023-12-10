@@ -45,6 +45,8 @@ jobs:
       - name: Install dependencies
         run: python3 -m pip install -r ./requirements.txt
 
+      - run: python3 -m pip install -e .
+
       - run: python -m sphinx ./docs/doc_conf docs
 
       - name: Deploy
