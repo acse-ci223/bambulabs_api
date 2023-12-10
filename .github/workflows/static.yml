@@ -47,7 +47,7 @@ jobs:
 
       - run: python3 -m pip install -e .
 
-      - run: python -m sphinx-build ./docs/doc_conf docs
+      - run: python -m sphinx ./docs/doc_conf docs
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
