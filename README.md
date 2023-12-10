@@ -8,6 +8,10 @@ This package provides a Python API for the Bambulabs 3D Printers via MQTT.
 
 [![pytest-unit-tests](https://github.com/acse-ci223/bambulabs_api/actions/workflows/pytest-unit-tests.yml/badge.svg)](https://github.com/acse-ci223/bambulabs_api/actions/workflows/pytest-unit-tests.yml)
 
+[![GitHub Pages](https://github.com/acse-ci223/bambulabs_api/actions/workflows/static.yml/badge.svg)](https://github.com/acse-ci223/bambulabs_api/actions/workflows/static.yml)
+
+
+
 ## Documentation
 
 The documentation for this package can be found [here](https://acse-ci223.github.io/bambulabs_api/).
