@@ -20,7 +20,7 @@ class Client:
     """
     Client Class for connecting to the Bambulabs 3D printer
     """
-    def __init__(self, ip_address, access_code, serial, output_path="./"):
+    def __init__(self, ip_address, access_code, serial):
         self.ip_address = ip_address
         self.access_code = access_code
         self.serial = serial
@@ -33,6 +33,8 @@ class Client:
         self.client.tls_insecure_set(True)
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
+
+        self._postable_values = {}
 
     def connect(self) -> None:
         """
@@ -130,23 +132,10 @@ class Client:
         # Current date and time
         now = datetime.now()
         doc = json.loads(msg.payload)
-        # Have something to look at on screen so you know it's spinning
-        print(doc)
-        # output_dir = Path(self.output_path)
-        # JSON blobs written just for debug convenience
-        # telem_json_path = output_dir / "telemetry.json"
-        # telem_json_err_path = output_dir / "telemetry.err.txt"
 
-        # only reason I split these into separate files was so they could
-        # easily be modeled as separate text boxes in OBS
-        # telem_text_path = output_dir / "telemetry.txt"
-        # ams_text_path = output_dir / "ams.txt"
+        print(doc)
 
         try:
-            # Write the raw JSON first incase there's a key error
-            # when we start trying to access it
-            # with telem_json_path.open("w") as fp:
-            #     fp.write(json.dumps(doc))
 
             if not doc:
                 return
@@ -160,11 +149,30 @@ class Client:
             speed_map = {1: 'Silent', 2: 'Standard', 3: 'Sport', 4: 'Ludacris'}
 
             min_remain = self.values['mc_remaining_time']
-            # Time 15 minutes in the future
+
             future_time = now + timedelta(minutes=min_remain)
             future_time_str = future_time.strftime("%Y-%m-%d %H:%M")
 
-            # active_ams = self.values['ams']['tray_now']
+            total_layer_num = self.values['total_layer_num']
+
+            nozzle_temper = self.values['nozzle_temper']
+            nozzle_target_temper = self.values['nozzle_target_temper']
+            bed_temper = self.values['bed_temper']
+            bed_target_temper = self.values['bed_target_temper']
+
+            file = self.values['gcode_file']
+
+            self._postable_values = {
+                'file': file,
+                "layer": layer,
+                "total_layers": total_layer_num,
+                "nozzle_temp": nozzle_temper,
+                "nozzle_target_temp": nozzle_target_temper,
+                "bed_temp": bed_temper,
+                "bed_target_temp": bed_target_temper,
+                "finish_eta": future_time_str,
+                "speed": speed_map[speed]
+            }
 
             print(f"Layer: {layer} ({self.values['mc_percent']} %)\n"
                   f"Nozzle Temp: {self.values['nozzle_temper']} / \
@@ -174,51 +182,22 @@ class Client:
                   f"Finish ETA: {future_time_str}\n"
                   f"Speed: {speed_map[speed]}")
 
-            # with telem_text_path.open("w") as fp:
-            #     fp.write(f"Layer: {layer} ({self.values['mc_percent']} %)\n"
-            #             f"Nozzle Temp: {self.values['nozzle_temper']}/
-            # {self.values['nozzle_target_temper']}\n"
-            #             f"Bed Temp: {self.values['bed_temper']}/
-            # {self.values['bed_target_temper']}\n"
-            #             f"Finish ETA: {future_time_str}\n"
-            #             f"Speed: {speed_map[speed]}")
-
-            # with ams_text_path.open("w") as fp:
-            #     for tray in self.values['ams']['ams'][0]['tray']:
-            #         tray_remain = ''
-            #         color_name = self._rgb_to_color_name(tray['cols'][0])
-            #         if active_ams == tray['id']:
-            #             active = " - In Use"
-            #         else:
-            #             active = ""
-            #         if tray['remain'] != -1:
-            #             tray_remain = f"({tray['remain']}% remain)"
-            #         if tray['tray_sub_brands'] == '':
-            #             tray_type = tray['tray_type']
-            #         else:
-            #             tray_type = tray['tray_sub_brands']
-            #         fp.write(f"Tray {tray['id']}:
-            # {tray_type} {color_name} {tray_remain}  {active}\n")
-
-            #     if active_ams == "254":
-            #         active = " - In Use"
-            #     else:
-            #         active = ""
-
-            #     color_name = self._rgb_to_color_name(
-            # self.values['vt_tray']['cols'][0])
-
-            #     fp.write(f"Ext. : {self.values['vt_tray']['tray_type']}
-            # {color_name} {active}")
-
-        # Sometimes empty or diff doc structure returned
-        # Swallow exception here and it'll just get retried next iteration
         except KeyError:
             print("Logging error json")
-            # with telem_json_err_path.open("w") as fp:
-            #     fp.write(json.dumps(doc))
 
         return None
+
+    def get_postable_values(self) -> dict:
+        """
+        get_postable_values Get a dictionary of values that can be posted
+        to the Bambulabs API
+
+        Returns
+        -------
+        dict
+            Dictionary of values that can be posted from the Bambulabs API
+        """
+        return self._postable_values
 
     def publish(self, msg) -> None:
         """
@@ -245,6 +224,7 @@ class Client:
         -------
         None
         """
+        self.publish({"pushing": {"command": "start", "sequence_id": 0}})
         self.client.loop_forever()
         return None
 
