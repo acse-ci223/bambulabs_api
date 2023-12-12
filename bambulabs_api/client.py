@@ -48,7 +48,7 @@ class Client:
         self.client.connect(self.ip_address, 8883, 60)
         return None
 
-    def _on_connect(self, client, userdata, flags, rc) -> None:
+    def _on_connect(self, client, userdata, flags, rc) -> None:  # pylint: disable=unused-argument  # noqa
         """
         _on_connect Callback function for when the client
         receives a CONNACK response from the server.
@@ -110,7 +110,7 @@ class Client:
             color_name = f"0x{rgb}"
         return color_name
 
-    def _on_message(self, client, userdata, msg) -> None:
+    def _on_message(self, client, userdata, msg) -> None:  # pylint: disable=unused-argument  # noqa
         """
         _on_message Callback function for when a PUBLISH message
         is received from the server.
