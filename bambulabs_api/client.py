@@ -190,7 +190,18 @@ class Client:
     def get_postable_values(self) -> dict:
         """
         get_postable_values Get a dictionary of values that can be posted
-        to the Bambulabs API
+        from the Bambulabs API
+
+        values include:
+        - file
+        - layer
+        - total_layers
+        - nozzle_temp
+        - nozzle_target_temp
+        - bed_temp
+        - bed_target_temp
+        - finish_eta
+        - speed
 
         Returns
         -------
