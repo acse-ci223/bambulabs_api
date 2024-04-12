@@ -6,7 +6,7 @@ __all__ = ["PrintStatus"]
 class PrintStatus(Enum):
     """
     Enum class for the printer status
-    
+
     The printer status is a value that indicates the current state of the printer.
 
     Attributes

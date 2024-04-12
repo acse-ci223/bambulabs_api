@@ -8,17 +8,17 @@ __all__ = ["AMSFilamentSettings", "Filament"]
 class AMSFilamentSettings:
     """
     Dataclass for the filament settings
-    
+
     The filament settings are a set of values that indicate the settings of the filament.
-    
+
     Attributes
     ----------
-    
+
     tray_info_idx: The tray info index.
     nozzle_temp_min: The minimum nozzle temperature.
     nozzle_temp_max: The maximum nozzle temperature.
     tray_type: The tray type.
-    """
+    """  # noqa
     tray_info_idx: str
     nozzle_temp_min: int
     nozzle_temp_max: int
@@ -28,12 +28,12 @@ class AMSFilamentSettings:
 class Filament(AMSFilamentSettings, Enum):
     """
     Enum class for the filament settings
-    
+
     The filament settings are a set of values that indicate the settings of the filament.
-    
+
     Attributes
     ----------
-    
+
     POLYLITE_PLA: The Polylite PLA filament settings.
     POLYTERRA_PLA: The Polyterra PLA filament settings.
     BAMBU_ABS: The Bambu ABS filament settings.
@@ -54,7 +54,7 @@ class Filament(AMSFilamentSettings, Enum):
     PLA_CF: The PLA-CF filament settings.
     PVA: The PVA filament settings.
     TPU: The TPU filament settings.
-    """
+    """  # noqa
     POLYLITE_PLA = "GFL00", 190, 250, "PLA"
     POLYTERRA_PLA = "GFL01", 190, 250, "PLA"
     BAMBU_ABS = "GFB00", 240, 270, "ABS"
