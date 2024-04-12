@@ -98,7 +98,7 @@ class PrintStatus(Enum):
 class GcodeState(Enum):
     """
     Enum class for the Gcode State
-    
+
     Gcode State that the printer can be in.
 
     Attributes
@@ -120,4 +120,3 @@ class GcodeState(Enum):
     @classmethod
     def _missing_(cls, value):
         return cls.UNKNOWN
-
