@@ -73,15 +73,13 @@ jobs:
       - name: Get version from pyproject.toml file
         id: get_version
         run: |
-          tree
-          cd ..
           ls
-          cd bambulabs_api
-          ls
-          cd dist
+          cd ../..
           ls
           version=$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
           echo "VERSION=${version}" >> $GITHUB_ENV
+          cd bambulabs_api/dist
+          ls
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
