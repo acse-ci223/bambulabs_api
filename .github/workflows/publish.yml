@@ -73,6 +73,7 @@ jobs:
       - name: Get version from pyproject.toml file
         id: get_version
         run: |
+          cd $GITHUB_WORKSPACE
           version=$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
           echo "VERSION=${version}" >> $GITHUB_ENV
       - name: Create GitHub Release
@@ -83,4 +84,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload "${{ env.VERSION }}" dist/** --repo "${{ github.repository }}"
-        
