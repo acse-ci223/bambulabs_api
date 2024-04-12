@@ -424,3 +424,39 @@ class PrinterMQTTClient:
                 }
             }
         )
+
+    def get_bed_temperature(self) -> float:
+        """
+        Get the bed temperature
+
+        Returns:
+            float: bed temperature
+        """
+        return float(self.__get("bed_temper", 0.0))
+
+    def get_bed_temperature_target(self) -> float:
+        """
+        Get the bed temperature target
+
+        Returns:
+            float: bed temperature target
+        """
+        return float(self.__get("bed_target_temper", 0.0))
+
+    def get_nozzle_temperature(self) -> float:
+        """
+        Get the nozzle temperature
+
+        Returns:
+            float: nozzle temperature
+        """
+        return float(self.__get("nozzle_temper", 0.0))
+
+    def get_nozzle_temperature_target(self) -> float:
+        """
+        Get the nozzle temperature target
+
+        Returns:
+            float: nozzle temperature target
+        """
+        return float(self.__get("nozzle_target_temper", 0.0))

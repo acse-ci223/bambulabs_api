@@ -105,8 +105,7 @@ class Printer:
             The bed temperature of the printer.
         None if the printer is not printing.
         """
-        # return self.__printerMQTTClient.get_bed_temperature()
-        return None
+        return self.__printerMQTTClient.get_bed_temperature()
 
     def get_nozzle_temperature(self) -> float | None:
         """
@@ -119,8 +118,7 @@ class Printer:
             The nozzle temperature of the printer.
         None if the printer is not printing.
         """
-        # return self.__printerMQTTClient.get_nozzle_temperature()
-        return None
+        return self.__printerMQTTClient.get_nozzle_temperature()
 
     def get_file_name(self) -> str:
         """
