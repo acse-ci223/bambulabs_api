@@ -1,5 +1,7 @@
 from enum import Enum
 
+__all__ = ["PrintStatus"]
+
 
 class PrintStatus(Enum):
     PRINTING = 0

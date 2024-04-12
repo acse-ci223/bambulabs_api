@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
+__all__ = ["AMSFilamentSettings", "Filament"]
+
 
 @dataclass(frozen=True)
 class AMSFilamentSettings:
