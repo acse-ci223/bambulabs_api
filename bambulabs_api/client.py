@@ -1,22 +1,18 @@
 """
 Client module for connecting to the Bambulabs 3D printer API
-and getting telemetry data from it in real time using MQTT protocol.
+and getting all the printer data.
 """
 
-from datetime import datetime, timedelta
-# from pathlib import Path
+from typing import BinaryIO
+from .camera_client import PrinterCamera
+from .ftp_client import PrinterFTPClient
+from .mqtt_client import PrinterMQTTClient
+from .filament_info import Filament, AMSFilamentSettings
 
-import json
-import ssl
-
-import paho.mqtt.client as mqtt  # type: ignore
-import webcolors  # type: ignore
-
-
-__all__ = ['Client']
+__all__ = ['Printer']
 
 
-class Client:
+class Printer:
     """
     Client Class for connecting to the Bambulabs 3D printer
     """
@@ -24,243 +20,412 @@ class Client:
         self.ip_address = ip_address
         self.access_code = access_code
         self.serial = serial
-        self.values = {}
-        self.client = mqtt.Client()
-        self.client.check_hostname = False
-        self.client.username_pw_set('bblp', self.access_code)
-        self.client.tls_set(tls_version=ssl.PROTOCOL_TLS,
-                            cert_reqs=ssl.CERT_NONE)
-        self.client.tls_insecure_set(True)
-        self.client.on_connect = self._on_connect
-        self.client.on_message = self._on_message
 
-        self._postable_values = {}
+        self.__printerMQTTClient = PrinterMQTTClient(self.ip_address,
+                                                     self.access_code,
+                                                     self.serial)
+        self.__printerCamera = PrinterCamera(self.ip_address,
+                                             self.access_code)
+        self.__printerFTPClient = PrinterFTPClient(self.ip_address,
+                                                   self.access_code)
 
-    def connect(self) -> None:
+    def connect(self):
         """
-        connect Connect to the Bambulabs 3D printer
+        Connect to the printer
+        """
+        self.__printerMQTTClient.connect()
+        self.__printerMQTTClient.start()
+        self.__printerCamera.start()
+
+    def disconnect(self):
+        """
+        Disconnect from the printer
+        """
+        self.__printerMQTTClient.stop()
+        self.__printerCamera.stop()
+
+    def get_time(self) -> (int | str | None):
+        """
+        Get the remaining time of the print job in seconds.
 
         Returns
         -------
-        None
-            Nothing
+        int
+            Remaining time of the print job in seconds.
+        str
+            "Unknown" if the remaining time is unknown.
+        None if the printer is not printing.
         """
-        self.client.connect(self.ip_address, 8883, 60)
-        return None
+        return self.__printerMQTTClient.get_remaining_time()
 
-    def _on_connect(self, client, userdata, flags, rc) -> None:  # pylint: disable=unused-argument  # noqa
+    def get_percentage(self) -> (int | str | None):
         """
-        _on_connect Callback function for when the client
-        receives a CONNACK response from the server.
-
-        Parameters
-        ----------
-        client : mqtt.Client
-            The client instance for this callback
-        userdata : String
-            User data
-        flags : Arraylike
-            Response flags sent by the broker
-        rc : int
-            The connection result
-        """
-        print("Connected with result code " + str(rc))
-        self.client.subscribe(f"device/{self.serial}/report")
-        return None
-
-    def _split_string(self, string) -> tuple:
-        """
-        _split_string Split a string into a tuple of 3 integers
-
-        Parameters
-        ----------
-        string : String
-            String to split
+        Get the percentage of the print job completed.
 
         Returns
         -------
-        tuple
-            Tuple of 3 integers representing the RGB value
+        int
+            Percentage of the print job completed.
+        str
+            "Unknown" if the percentage is unknown.
+        None if the printer is not printing.
         """
-        tuple_result = (int(string[:2], 16),
-                        int(string[2:4], 16),
-                        int(string[4:6], 16))
-        return tuple_result
+        return self.__printerMQTTClient.get_last_print_percentage()
 
-    def _rgb_to_color_name(self, rgb) -> str:
+    def get_state(self) -> str:
         """
-        _rgb_to_color_name Convert an RGB value to a color name
-
-        Parameters
-        ----------
-        rgb : String
-            RGB value to convert to a color name (e.g. "FF0000")
+        Get the state of the printer.
 
         Returns
         -------
         str
-            Color name (e.g. "red")
+            The state of the printer.
         """
-        try:
-            color_tuple = self._split_string(rgb)
-            color_name = webcolors.rgb_to_name(color_tuple)
-        except ValueError:
-            # If the RGB value doesn't match any known color,
-            # return the hex code with a 0x prefeix
-            color_name = f"0x{rgb}"
-        return color_name
+        return self.__printerMQTTClient.get_printer_state().name
 
-    def _on_message(self, client, userdata, msg) -> None:  # pylint: disable=unused-argument  # noqa
+    def get_print_speed(self) -> int:
         """
-        _on_message Callback function for when a PUBLISH message
-        is received from the server.
+        Get the print speed of the printer.
+
+        Returns
+        -------
+        int
+            The print speed of the printer.
+        """
+        return self.__printerMQTTClient.get_print_speed()
+
+    def get_bed_temperature(self) -> float | None:
+        """
+        Get the bed temperature of the printer.
+        NOT IMPLEMENTED YET
+
+        Returns
+        -------
+        float
+            The bed temperature of the printer.
+        None if the printer is not printing.
+        """
+        # return self.__printerMQTTClient.get_bed_temperature()
+        return None
+
+    def get_nozzle_temperature(self) -> float | None:
+        """
+        Get the nozzle temperature of the printer.
+        NOT IMPLEMENTED YET
+
+        Returns
+        -------
+        float
+            The nozzle temperature of the printer.
+        None if the printer is not printing.
+        """
+        # return self.__printerMQTTClient.get_nozzle_temperature()
+        return None
+
+    def get_file_name(self) -> str:
+        """
+        Get the name of the file being printed.
+
+        Returns
+        -------
+        str
+            The name of the file being printed.
+        """
+        return self.__printerMQTTClient.get_file_name()
+
+    def get_light_state(self) -> str:
+        """
+        Get the state of the printer light.
+
+        Returns
+        -------
+        str
+            The state of the printer light.
+        """
+        return self.__printerMQTTClient.get_light_state()
+
+    def turn_light_on(self) -> bool:
+        """
+        Turn on the printer light.
+
+        Returns
+        -------
+        bool
+            True if the light is turned on successfully.
+        """
+        return self.__printerMQTTClient.turn_light_on()
+
+    def turn_light_off(self) -> bool:
+        """
+        Turn off the printer light.
+
+        Returns
+        -------
+        bool
+            True if the light is turned off successfully.
+        """
+        return self.__printerMQTTClient.turn_light_off()
+
+    def upload_file(self, file: BinaryIO, filename: str = "ftp_upload.gcode") -> str:  # noqa
+        """
+        Upload a file to the printer.
 
         Parameters
         ----------
-        client : mqtt.Client
-            The client instance for this callback
-        userdata : String
-            User data
-        msg : mqtt.MQTTMessage
-            An instance of MQTTMessage. This is a class with members topic,
-            payload, qos, retain.
+        file : BinaryIO
+            The file to be uploaded.
+        filename : str, optional
+            The name of the file, by default "ftp_upload.gcode".
 
         Returns
         -------
-        None
+        str
+            The path of the uploaded file.
         """
-        # Current date and time
-        now = datetime.now()
-        doc = json.loads(msg.payload)
-
-        print(doc)
-
         try:
+            if file and filename:
+                return self.__printerFTPClient.upload_file(file, filename)
+        except Exception as e:
+            raise Exception(f"Exception occurred during file upload: {e}")  # noqa  # pylint: disable=raise-missing-from,broad-exception-raised
+        finally:
+            file.close()
 
-            if not doc:
-                return
-
-            globals()['values'] = dict(self.values, **doc['print'])
-
-            print(self.values)
-
-            layer = self.values.get('layer_num', '?')
-            speed = self.values.get('spd_lvl', 2)
-            speed_map = {1: 'Silent', 2: 'Standard', 3: 'Sport', 4: 'Ludacris'}
-
-            min_remain = self.values['mc_remaining_time']
-
-            future_time = now + timedelta(minutes=min_remain)
-            future_time_str = future_time.strftime("%Y-%m-%d %H:%M")
-
-            total_layer_num = self.values['total_layer_num']
-
-            nozzle_temper = self.values['nozzle_temper']
-            nozzle_target_temper = self.values['nozzle_target_temper']
-            bed_temper = self.values['bed_temper']
-            bed_target_temper = self.values['bed_target_temper']
-
-            file = self.values['gcode_file']
-
-            self._postable_values = {
-                'file': file,
-                "layer": layer,
-                "total_layers": total_layer_num,
-                "nozzle_temp": nozzle_temper,
-                "nozzle_target_temp": nozzle_target_temper,
-                "bed_temp": bed_temper,
-                "bed_target_temp": bed_target_temper,
-                "finish_eta": future_time_str,
-                "speed": speed_map[speed]
-            }
-
-            print(f"Layer: {layer} ({self.values['mc_percent']} %)\n"
-                  f"Nozzle Temp: {self.values['nozzle_temper']} / \
-                    {self.values['nozzle_target_temper']}\n"
-                  f"Bed Temp: {self.values['bed_temper']} / \
-                    {self.values['bed_target_temper']}\n"
-                  f"Finish ETA: {future_time_str}\n"
-                  f"Speed: {speed_map[speed]}")
-
-        except KeyError:
-            print("Logging error json")
-
-        return None
-
-    def get_postable_values(self) -> dict:
+    def start_print(self, filename: str, plate_number: int) -> bool:
         """
-        get_postable_values Get a dictionary of values that can be posted
-        from the Bambulabs API
-
-        values include:
-        - file
-        - layer
-        - total_layers
-        - nozzle_temp
-        - nozzle_target_temp
-        - bed_temp
-        - bed_target_temp
-        - finish_eta
-        - speed
-
-        Returns
-        -------
-        dict
-            Dictionary of values that can be posted from the Bambulabs API
-        """
-        return self._postable_values
-
-    def publish(self, msg) -> None:
-        """
-        publish Publish a message to the Bambulabs 3D printer
+        Start printing a file.
 
         Parameters
         ----------
-        msg : JSON
-            JSON message to send to the Bambulabs 3D printer
+        filename : str
+            The name of the file to be printed.
+        plate_number : int
+            The plate number of the file to be printed.
 
         Returns
         -------
-        None
+        bool
+            True if the file is printed successfully.
         """
-        self.client.publish(f"device/{self.serial}/request", json.dumps(msg))
-        return None
+        return self.__printerMQTTClient.start_print_3mf(filename,
+                                                        plate_number)
 
-    def loop_forever(self) -> None:
+    def stop_print(self) -> bool:
         """
-        loop_forever Loop forever and process network traffic,
-        dispatches callbacks and handles reconnecting.
+        Stop the printer from printing.
 
         Returns
         -------
-        None
+        bool
+            True if the printer is stopped successfully.
         """
-        self.publish({"pushing": {"command": "start", "sequence_id": 0}})
-        self.client.loop_forever()
-        return None
+        return self.__printerMQTTClient.stop_print()
 
+    def pause_print(self) -> bool:
+        """
+        Pause the printer from printing.
 
-# client = mqtt.Client()
-# client.check_hostname = False
+        Returns
+        -------
+        bool
+            True if the printer is paused successfully.
+        """
+        return self.__printerMQTTClient.pause_print()
 
-# # set username and password
-# # Username isn't something you can change, so hardcoded here
-# client.username_pw_set('bblp', ACCESS_CODE)
+    def resume_print(self) -> bool:
+        """
+        Resume the printer from printing.
 
-# # These 2 lines are required to bypass self signed certificate errors,
-# at least on my machine
-# # these things can be finicky depending on your system setup
-# client.tls_set(tls_version=ssl.PROTOCOL_TLS, cert_reqs=ssl.CERT_NONE)
-# client.tls_insecure_set(True)
+        Returns
+        -------
+        bool
+            True if the printer is resumed successfully.
+        """
+        return self.__printerMQTTClient.resume_print()
 
-# client.on_connect = on_connect
-# client.on_message = on_message
-# client.connect(BAMBU_IP_ADDRESS, 8883, 60)
+    def set_bed_temperature(self, temperature: int) -> bool:
+        """
+        Set the bed temperature of the printer.
 
-# client.publish(f"device/{SERIAL}/request", '{"pushing":
-# {"command": "start", "sequence_id": 0}}')
-# # Blocking call that processes network traffic, dispatches callbacks and
-# # handles reconnecting.
-# # Other loop*() functions are available that give a threaded interface and a
-# # manual interface.
-# client.loop_forever()
+        Parameters
+        ----------
+        temperature : int
+            The temperature to be set.
+
+        Returns
+        -------
+        bool
+            True if the temperature is set successfully.
+        """
+        return self.__printerMQTTClient.set_bed_temperature(temperature)
+
+    def home_printer(self) -> bool:
+        """
+        Home the printer.
+
+        Returns
+        -------
+        bool
+            True if the printer is homed successfully.
+        """
+        return self.__printerMQTTClient.auto_home()
+
+    def move_z_axis(self, height: int) -> bool:
+        """
+        Move the Z-axis of the printer.
+
+        Parameters
+        ----------
+        height : float
+            The height for the bed.
+
+        Returns
+        -------
+        bool
+            True if the Z-axis is moved successfully.
+        """
+        return self.__printerMQTTClient.set_bed_height(height)
+
+    def set_filament_printer(self, color: str, filament: str | AMSFilamentSettings) -> bool:  # noqa
+        """
+        Set the filament of the printer.
+
+        Parameters
+        ----------
+        color : str
+            The color of the filament.
+        filament : str | AMSFilamentSettings
+            The filament to be set.
+
+        Returns
+        -------
+        bool
+            True if the filament is set successfully.
+        """
+        assert len(color) == 6, "Color must be a 6 character hex code"
+        if isinstance(filament, str) or isinstance(filament, AMSFilamentSettings):  # noqa
+            filament = Filament(filament)
+        else:
+            raise ValueError(
+                "Filament must be a string or AMSFilamentSettings object")
+        return self.__printerMQTTClient.set_printer_filament(filament, color)
+
+    def set_nozzle_temperature(self, temperature: int) -> bool:
+        """
+        Set the nozzle temperature of the printer.
+
+        Parameters
+        ----------
+        temperature : int
+            The temperature to be set.
+
+        Returns
+        -------
+        bool
+            True if the temperature is set successfully.
+        """
+        return self.__printerMQTTClient.set_nozzle_temperature(temperature)
+
+    def set_print_speed(self, speed_lvl: int) -> bool:
+        """
+        Set the print speed of the printer.
+
+        Parameters
+        ----------
+        speed_lvl : int
+            The speed level to be set.
+            0: Slowest
+            1: Slow
+            2: Fast
+            3: Fastest
+
+        Returns
+        -------
+        bool
+            True if the speed level is set successfully.
+        """
+        assert 0 <= speed_lvl <= 3, "Speed level must be between 0 and 3"
+        return self.__printerMQTTClient.set_print_speed_lvl(speed_lvl)
+
+    def delete_file(self, file_path: str) -> str:
+        """
+        Delete a file from the printer.
+
+        Parameters
+        ----------
+        file_path : str
+            The path of the file to be deleted.
+
+        Returns
+        -------
+        str
+            The path of the deleted file.
+        """
+        return self.__printerFTPClient.delete_file(file_path)
+
+    def calibrate_printer(self, bed_level: bool = True,
+                          motor_noise_calibration: bool = True,
+                          vibration_compensation: bool = True) -> bool:
+        """
+        Calibrate the printer.
+
+        Parameters
+        ----------
+        bed_level : bool, optional
+            Whether to calibrate the bed level, by default True.
+        motor_noise_calibration : bool, optional
+            Whether to calibrate the motor noise, by default True.
+        vibration_compensation : bool, optional
+            Whether to calibrate the vibration compensation, by default True.
+
+        Returns
+        -------
+        bool
+            True if the printer is calibrated successfully.
+        """
+        return self.__printerMQTTClient.calibration(bed_level,
+                                                    motor_noise_calibration,
+                                                    vibration_compensation)
+
+    def load_filament_spool(self) -> bool:
+        """
+        Load the filament spool to the printer.
+
+        Returns
+        -------
+        bool
+            True if the filament spool is loaded successfully.
+        """
+        return self.__printerMQTTClient.load_filament_spool()
+
+    def unload_filament_spool(self) -> bool:
+        """
+        Unload the filament spool from the printer.
+
+        Returns
+        -------
+        bool
+            True if the filament spool is unloaded successfully.
+        """
+        return self.__printerMQTTClient.unload_filament_spool()
+
+    def retry_filament_action(self) -> bool:
+        """
+        Retry the filament action.
+
+        Returns
+        -------
+        bool
+            True if the filament action is retried successfully.
+        """
+        return self.__printerMQTTClient.resume_filament_action()
+
+    def get_camera_frame(self) -> str:
+        """
+        Get the camera frame of the printer.
+
+        Returns
+        -------
+        str
+            Base64 encoded image of the camera frame.
+        """
+        return self.__printerCamera.get_frame()
