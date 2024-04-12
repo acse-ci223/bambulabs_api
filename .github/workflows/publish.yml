@@ -110,4 +110,4 @@ jobs:
       - name: Upload artifact signatures to GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "${{ env.VERSION }}" --latest dist/** --repo "${{ github.repository }}"
+        run: gh release upload "${{ env.VERSION }}" dist/** --repo "${{ github.repository }}"
