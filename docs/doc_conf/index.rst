@@ -30,3 +30,9 @@ PrintStatus
 .. automodule:: bambulabs_api.PrintStatus
   :members:
   :imported-members:
+
+GcodeState
+======
+.. automodule:: bambulabs_api.GcodeState
+  :members:
+  :imported-members:
