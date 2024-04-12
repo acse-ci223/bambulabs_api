@@ -15,5 +15,7 @@ setup(
     author="Chris Ioannidis",
     author_email="chris.ioannidis23@imperial.ac.uk",
     packages=["bambulabs_api"],
-    requires=["paho-mqtt"],
+    install_requires=[
+        "paho-mqtt",
+    ],
 )
