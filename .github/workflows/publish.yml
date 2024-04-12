@@ -73,9 +73,12 @@ jobs:
       - name: Get version from pyproject.toml file
         id: get_version
         run: |
+          tree
           cd ..
           ls
           cd bambulabs_api
+          ls
+          cd dist
           ls
           version=$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
           echo "VERSION=${version}" >> $GITHUB_ENV
