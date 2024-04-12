@@ -12,10 +12,14 @@ if __name__ == '__main__':
     print(f'Access Code: {ACCESS_CODE}')
 
     # Create a new instance of the API
-    api = bl.Client(IP, SERIAL, ACCESS_CODE)
+    printer = bl.Printer(IP, SERIAL, ACCESS_CODE)
 
     # Connect to the Bambulabs 3D printer
-    api.connect()
+    printer.connect()
 
-    # Start the API loop
-    api.loop_forever()
+    # Get the printer status
+    status = printer.get_state()
+    print(f'Printer status: {status}')
+
+    # Disconnect from the Bambulabs 3D printer
+    printer.disconnect()
