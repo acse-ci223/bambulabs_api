@@ -44,6 +44,7 @@
 <li><a class="reference internal" href="#filament">Filament</a></li>
 <li><a class="reference internal" href="#amsfilamentsettings">AMSFilamentSettings</a></li>
 <li><a class="reference internal" href="#printstatus">PrintStatus</a></li>
+<li><a class="reference internal" href="#gcodestate">GcodeState</a></li>
 </ul>
 </div>
         </div>
@@ -1154,6 +1155,71 @@ NOT IMPLEMENTED YET</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>The printer is idle.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="gcodestate">
+<h1>GcodeState<a class="headerlink" href="#gcodestate" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-bambulabs_api.GcodeState"></span><p>Enum class for the Gcode State</p>
+<p>Gcode State that the printer can be in.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.GcodeState.IDLE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.GcodeState.</span></span><span class="sig-name descname"><span class="pre">IDLE</span></span><a class="headerlink" href="#bambulabs_api.GcodeState.IDLE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is idle.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.GcodeState.PREPARING">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.GcodeState.</span></span><span class="sig-name descname"><span class="pre">PREPARING</span></span><a class="headerlink" href="#bambulabs_api.GcodeState.PREPARING" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is preparing (File upload).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.GcodeState.RUNNING">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.GcodeState.</span></span><span class="sig-name descname"><span class="pre">RUNNING</span></span><a class="headerlink" href="#bambulabs_api.GcodeState.RUNNING" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is running.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.GcodeState.PAUSED">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.GcodeState.</span></span><span class="sig-name descname"><span class="pre">PAUSED</span></span><a class="headerlink" href="#bambulabs_api.GcodeState.PAUSED" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.GcodeState.FINISHED">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.GcodeState.</span></span><span class="sig-name descname"><span class="pre">FINISHED</span></span><a class="headerlink" href="#bambulabs_api.GcodeState.FINISHED" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer has finished.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.GcodeState.UNKNOWN">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.GcodeState.</span></span><span class="sig-name descname"><span class="pre">UNKNOWN</span></span><a class="headerlink" href="#bambulabs_api.GcodeState.UNKNOWN" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer state is unknown.</p>
 </dd>
 </dl>
 </dd></dl>
