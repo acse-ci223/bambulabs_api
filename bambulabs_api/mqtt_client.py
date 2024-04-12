@@ -7,7 +7,7 @@ import paho.mqtt.client as mqtt
 from paho.mqtt.enums import CallbackAPIVersion
 
 from .filament_info import Filament
-from .states_info import PrintStatus
+from .states_info import GcodeState, PrintStatus
 
 
 class PrinterMQTTClient:
@@ -120,7 +120,7 @@ class PrinterMQTTClient:
         Returns:
             PrintStatus: printer state
         """
-        return PrintStatus(self.__get("gcode_state", -1))
+        return GcodeState(self.__get("gcode_state", -1))
 
     def get_file_name(self) -> str:
         """
