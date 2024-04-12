@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BambuLabs API &mdash; BambuLabs API  documentation</title>
@@ -41,6 +41,9 @@
 <li><a class="reference internal" href="#">BambuLabs API</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#printer">Printer</a></li>
+<li><a class="reference internal" href="#filament">Filament</a></li>
+<li><a class="reference internal" href="#amsfilamentsettings">AMSFilamentSettings</a></li>
+<li><a class="reference internal" href="#printstatus">PrintStatus</a></li>
 </ul>
 </div>
         </div>
@@ -83,17 +86,17 @@ including the status of the printer and the status of the print job.</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">calibrate_printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bed_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">motor_noise_calibration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vibration_compensation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.calibrate_printer" title="Permalink to this definition"></a></dt>
 <dd><p>Calibrate the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>bed_level</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to calibrate the bed level, by default True.</p></li>
 <li><p><strong>motor_noise_calibration</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to calibrate the motor noise, by default True.</p></li>
 <li><p><strong>vibration_compensation</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to calibrate the vibration compensation, by default True.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if the printer is calibrated successfully.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -110,13 +113,13 @@ including the status of the printer and the status of the print job.</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">delete_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.delete_file" title="Permalink to this definition"></a></dt>
 <dd><p>Delete a file from the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path of the file to be deleted.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The path of the deleted file.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -134,7 +137,7 @@ including the status of the printer and the status of the print job.</p>
 <dd><p>Get the bed temperature of the printer.
 NOT IMPLEMENTED YET</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><em>float</em> – The bed temperature of the printer.</p></li>
 <li><p><em>None if the printer is not printing.</em></p></li>
@@ -149,10 +152,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_camera_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_camera_frame" title="Permalink to this definition"></a></dt>
 <dd><p>Get the camera frame of the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Base64 encoded image of the camera frame.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
@@ -163,10 +166,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_file_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_file_name" title="Permalink to this definition"></a></dt>
 <dd><p>Get the name of the file being printed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The name of the file being printed.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
@@ -177,10 +180,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_light_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_light_state" title="Permalink to this definition"></a></dt>
 <dd><p>Get the state of the printer light.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The state of the printer light.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
@@ -192,7 +195,7 @@ NOT IMPLEMENTED YET</p>
 <dd><p>Get the nozzle temperature of the printer.
 NOT IMPLEMENTED YET</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><em>float</em> – The nozzle temperature of the printer.</p></li>
 <li><p><em>None if the printer is not printing.</em></p></li>
@@ -207,7 +210,7 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_percentage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_percentage" title="Permalink to this definition"></a></dt>
 <dd><p>Get the percentage of the print job completed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><em>int</em> – Percentage of the print job completed.</p></li>
 <li><p><em>str</em> – “Unknown” if the percentage is unknown.</p></li>
@@ -223,10 +226,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_print_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_print_speed" title="Permalink to this definition"></a></dt>
 <dd><p>Get the print speed of the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The print speed of the printer.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>int</p>
 </dd>
 </dl>
@@ -237,10 +240,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_state" title="Permalink to this definition"></a></dt>
 <dd><p>Get the state of the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The state of the printer.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
@@ -251,7 +254,7 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_time" title="Permalink to this definition"></a></dt>
 <dd><p>Get the remaining time of the print job in seconds.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><em>int</em> – Remaining time of the print job in seconds.</p></li>
 <li><p><em>str</em> – “Unknown” if the remaining time is unknown.</p></li>
@@ -267,10 +270,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">home_printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.home_printer" title="Permalink to this definition"></a></dt>
 <dd><p>Home the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the printer is homed successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -281,10 +284,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">load_filament_spool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.load_filament_spool" title="Permalink to this definition"></a></dt>
 <dd><p>Load the filament spool to the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the filament spool is loaded successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -295,13 +298,13 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">move_z_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.move_z_axis" title="Permalink to this definition"></a></dt>
 <dd><p>Move the Z-axis of the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>height</strong> (<em>float</em>) – The height for the bed.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if the Z-axis is moved successfully.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -312,10 +315,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">pause_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.pause_print" title="Permalink to this definition"></a></dt>
 <dd><p>Pause the printer from printing.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the printer is paused successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -326,10 +329,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">resume_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.resume_print" title="Permalink to this definition"></a></dt>
 <dd><p>Resume the printer from printing.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the printer is resumed successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -340,10 +343,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">retry_filament_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.retry_filament_action" title="Permalink to this definition"></a></dt>
 <dd><p>Retry the filament action.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the filament action is retried successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -354,13 +357,13 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">set_bed_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.set_bed_temperature" title="Permalink to this definition"></a></dt>
 <dd><p>Set the bed temperature of the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>temperature</strong> (<em>int</em>) – The temperature to be set.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if the temperature is set successfully.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -371,16 +374,16 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">set_filament_printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filament</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bambulabs_api.filament_info.AMSFilamentSettings</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.set_filament_printer" title="Permalink to this definition"></a></dt>
 <dd><p>Set the filament of the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>color</strong> (<em>str</em>) – The color of the filament.</p></li>
 <li><p><strong>filament</strong> (<em>str</em><em> | </em><em>AMSFilamentSettings</em>) – The filament to be set.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if the filament is set successfully.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -391,13 +394,13 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">set_nozzle_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.set_nozzle_temperature" title="Permalink to this definition"></a></dt>
 <dd><p>Set the nozzle temperature of the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>temperature</strong> (<em>int</em>) – The temperature to be set.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if the temperature is set successfully.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -408,17 +411,17 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">set_print_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_lvl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.set_print_speed" title="Permalink to this definition"></a></dt>
 <dd><p>Set the print speed of the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>speed_lvl</strong> (<em>int</em>) – The speed level to be set.
 0: Slowest
 1: Slow
 2: Fast
 3: Fastest</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if the speed level is set successfully.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -429,16 +432,16 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">start_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plate_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.start_print" title="Permalink to this definition"></a></dt>
 <dd><p>Start printing a file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filename</strong> (<em>str</em>) – The name of the file to be printed.</p></li>
 <li><p><strong>plate_number</strong> (<em>int</em>) – The plate number of the file to be printed.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if the file is printed successfully.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -449,10 +452,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">stop_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.stop_print" title="Permalink to this definition"></a></dt>
 <dd><p>Stop the printer from printing.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the printer is stopped successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -463,10 +466,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">turn_light_off</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.turn_light_off" title="Permalink to this definition"></a></dt>
 <dd><p>Turn off the printer light.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the light is turned off successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -477,10 +480,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">turn_light_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.turn_light_on" title="Permalink to this definition"></a></dt>
 <dd><p>Turn on the printer light.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the light is turned on successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -491,10 +494,10 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">unload_filament_spool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.unload_filament_spool" title="Permalink to this definition"></a></dt>
 <dd><p>Unload the filament spool from the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if the filament spool is unloaded successfully.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -505,17 +508,652 @@ NOT IMPLEMENTED YET</p>
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">upload_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ftp_upload.gcode'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.upload_file" title="Permalink to this definition"></a></dt>
 <dd><p>Upload a file to the printer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>file</strong> (<em>BinaryIO</em>) – The file to be uploaded.</p></li>
 <li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the file, by default “ftp_upload.gcode”.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The path of the uploaded file.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="filament">
+<h1>Filament<a class="headerlink" href="#filament" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-bambulabs_api.Filament"></span><p>Enum class for the filament settings</p>
+<p>The filament settings are a set of values that indicate the settings of the filament.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.POLYLITE_PLA">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">POLYLITE_PLA</span></span><a class="headerlink" href="#bambulabs_api.Filament.POLYLITE_PLA" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Polylite PLA filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.POLYTERRA_PLA">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">POLYTERRA_PLA</span></span><a class="headerlink" href="#bambulabs_api.Filament.POLYTERRA_PLA" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Polyterra PLA filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.BAMBU_ABS">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">BAMBU_ABS</span></span><a class="headerlink" href="#bambulabs_api.Filament.BAMBU_ABS" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Bambu ABS filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.BAMBU_PA_CF">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">BAMBU_PA_CF</span></span><a class="headerlink" href="#bambulabs_api.Filament.BAMBU_PA_CF" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Bambu PA-CF filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.BAMBU_PC">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">BAMBU_PC</span></span><a class="headerlink" href="#bambulabs_api.Filament.BAMBU_PC" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Bambu PC filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.BAMBU_PLA_Basic">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">BAMBU_PLA_Basic</span></span><a class="headerlink" href="#bambulabs_api.Filament.BAMBU_PLA_Basic" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Bambu PLA Basic filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.BAMBU_PLA_Matte">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">BAMBU_PLA_Matte</span></span><a class="headerlink" href="#bambulabs_api.Filament.BAMBU_PLA_Matte" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Bambu PLA Matte filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.SUPPORT_G">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">SUPPORT_G</span></span><a class="headerlink" href="#bambulabs_api.Filament.SUPPORT_G" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Support G filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.SUPPORT_W">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">SUPPORT_W</span></span><a class="headerlink" href="#bambulabs_api.Filament.SUPPORT_W" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Support W filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.BAMBU_TPU_95A">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">BAMBU_TPU_95A</span></span><a class="headerlink" href="#bambulabs_api.Filament.BAMBU_TPU_95A" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The Bambu TPU 95A filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.ABS">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">ABS</span></span><a class="headerlink" href="#bambulabs_api.Filament.ABS" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The ABS filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.ASA">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">ASA</span></span><a class="headerlink" href="#bambulabs_api.Filament.ASA" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The ASA filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.PA">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">PA</span></span><a class="headerlink" href="#bambulabs_api.Filament.PA" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The PA filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.PA_CF">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">PA_CF</span></span><a class="headerlink" href="#bambulabs_api.Filament.PA_CF" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The PA-CF filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.PC">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">PC</span></span><a class="headerlink" href="#bambulabs_api.Filament.PC" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The PC filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.PETG">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">PETG</span></span><a class="headerlink" href="#bambulabs_api.Filament.PETG" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The PETG filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.PLA">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">PLA</span></span><a class="headerlink" href="#bambulabs_api.Filament.PLA" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The PLA filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.PLA_CF">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">PLA_CF</span></span><a class="headerlink" href="#bambulabs_api.Filament.PLA_CF" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The PLA-CF filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.PVA">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">PVA</span></span><a class="headerlink" href="#bambulabs_api.Filament.PVA" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The PVA filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.Filament.TPU">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Filament.</span></span><span class="sig-name descname"><span class="pre">TPU</span></span><a class="headerlink" href="#bambulabs_api.Filament.TPU" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The TPU filament settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="amsfilamentsettings">
+<h1>AMSFilamentSettings<a class="headerlink" href="#amsfilamentsettings" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-bambulabs_api.AMSFilamentSettings"></span><p>Dataclass for the filament settings</p>
+<p>The filament settings are a set of values that indicate the settings of the filament.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.AMSFilamentSettings.tray_info_idx">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.AMSFilamentSettings.</span></span><span class="sig-name descname"><span class="pre">tray_info_idx</span></span><a class="headerlink" href="#bambulabs_api.AMSFilamentSettings.tray_info_idx" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The tray info index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.AMSFilamentSettings.nozzle_temp_min">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.AMSFilamentSettings.</span></span><span class="sig-name descname"><span class="pre">nozzle_temp_min</span></span><a class="headerlink" href="#bambulabs_api.AMSFilamentSettings.nozzle_temp_min" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The minimum nozzle temperature.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.AMSFilamentSettings.nozzle_temp_max">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.AMSFilamentSettings.</span></span><span class="sig-name descname"><span class="pre">nozzle_temp_max</span></span><a class="headerlink" href="#bambulabs_api.AMSFilamentSettings.nozzle_temp_max" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The maximum nozzle temperature.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.AMSFilamentSettings.tray_type">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.AMSFilamentSettings.</span></span><span class="sig-name descname"><span class="pre">tray_type</span></span><a class="headerlink" href="#bambulabs_api.AMSFilamentSettings.tray_type" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The tray type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="printstatus">
+<h1>PrintStatus<a class="headerlink" href="#printstatus" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-bambulabs_api.PrintStatus"></span><p>Enum class for the printer status</p>
+<p>The printer status is a value that indicates the current state of the printer.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PRINTING">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PRINTING</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PRINTING" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is currently printing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.AUTO_BED_LEVELING">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">AUTO_BED_LEVELING</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.AUTO_BED_LEVELING" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is performing an automatic bed leveling.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.HEATBED_PREHEATING">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">HEATBED_PREHEATING</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.HEATBED_PREHEATING" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is preheating the heatbed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.SWEEPING_XY_MECH_MODE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">SWEEPING_XY_MECH_MODE</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.SWEEPING_XY_MECH_MODE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is performing a sweeping XY mechanical mode.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.CHANGING_FILAMENT">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">CHANGING_FILAMENT</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.CHANGING_FILAMENT" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is changing the filament.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.M400_PAUSE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">M400_PAUSE</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.M400_PAUSE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_FILAMENT_RUNOUT">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_FILAMENT_RUNOUT</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_FILAMENT_RUNOUT" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to filament runout.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.HEATING_HOTEND">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">HEATING_HOTEND</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.HEATING_HOTEND" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is heating the hotend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.CALIBRATING_EXTRUSION">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">CALIBRATING_EXTRUSION</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.CALIBRATING_EXTRUSION" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is calibrating the extrusion.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.SCANNING_BED_SURFACE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">SCANNING_BED_SURFACE</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.SCANNING_BED_SURFACE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is scanning the bed surface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.INSPECTING_FIRST_LAYER">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">INSPECTING_FIRST_LAYER</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.INSPECTING_FIRST_LAYER" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is inspecting the first layer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.IDENTIFYING_BUILD_PLATE_TYPE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">IDENTIFYING_BUILD_PLATE_TYPE</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.IDENTIFYING_BUILD_PLATE_TYPE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is identifying the build plate type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.CALIBRATING_MICRO_LIDAR">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">CALIBRATING_MICRO_LIDAR</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.CALIBRATING_MICRO_LIDAR" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is calibrating the micro LiDAR.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.HOMING_TOOLHEAD">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">HOMING_TOOLHEAD</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.HOMING_TOOLHEAD" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is homing the toolhead.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.CLEANING_NOZZLE_TIP">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">CLEANING_NOZZLE_TIP</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.CLEANING_NOZZLE_TIP" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is cleaning the nozzle tip.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.CHECKING_EXTRUDER_TEMPERATURE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">CHECKING_EXTRUDER_TEMPERATURE</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.CHECKING_EXTRUDER_TEMPERATURE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is checking the extruder temperature.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_USER">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_USER</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_USER" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused by the user.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_FRONT_COVER_FALLING">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_FRONT_COVER_FALLING</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_FRONT_COVER_FALLING" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to the front cover falling.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.CALIBRATING_LIDAR">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">CALIBRATING_LIDAR</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.CALIBRATING_LIDAR" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is calibrating the LiDAR.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.CALIBRATING_EXTRUSION_FLOW">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">CALIBRATING_EXTRUSION_FLOW</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.CALIBRATING_EXTRUSION_FLOW" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is calibrating the extrusion flow.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_NOZZLE_TEMPERATURE_MALFUNCTION">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_NOZZLE_TEMPERATURE_MALFUNCTION</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_NOZZLE_TEMPERATURE_MALFUNCTION" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a nozzle temperature malfunction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_HEAT_BED_TEMPERATURE_MALFUNCTION">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_HEAT_BED_TEMPERATURE_MALFUNCTION</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_HEAT_BED_TEMPERATURE_MALFUNCTION" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a heat bed temperature malfunction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.FILAMENT_UNLOADING">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">FILAMENT_UNLOADING</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.FILAMENT_UNLOADING" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is unloading the filament.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_SKIPPED_STEP">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_SKIPPED_STEP</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_SKIPPED_STEP" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a skipped step.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.FILAMENT_LOADING">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">FILAMENT_LOADING</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.FILAMENT_LOADING" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is loading the filament.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.CALIBRATING_MOTOR_NOISE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">CALIBRATING_MOTOR_NOISE</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.CALIBRATING_MOTOR_NOISE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is calibrating the motor noise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_AMS_LOST">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_AMS_LOST</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_AMS_LOST" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to an AMS lost.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_LOW_FAN_SPEED_HEAT_BREAK">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_LOW_FAN_SPEED_HEAT_BREAK</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_LOW_FAN_SPEED_HEAT_BREAK" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a low fan speed heat break.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_CHAMBER_TEMPERATURE_CONTROL_ERROR">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_CHAMBER_TEMPERATURE_CONTROL_ERROR</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_CHAMBER_TEMPERATURE_CONTROL_ERROR" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a chamber temperature control error.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.COOLING_CHAMBER">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">COOLING_CHAMBER</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.COOLING_CHAMBER" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is cooling the chamber.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_USER_GCODE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_USER_GCODE</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_USER_GCODE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused by the user GCODE.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.MOTOR_NOISE_SHOWOFF">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">MOTOR_NOISE_SHOWOFF</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.MOTOR_NOISE_SHOWOFF" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is showing off the motor noise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_NOZZLE_FILAMENT_COVERED_DETECTED">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_NOZZLE_FILAMENT_COVERED_DETECTED</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_NOZZLE_FILAMENT_COVERED_DETECTED" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a nozzle filament covered detected.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_CUTTER_ERROR">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_CUTTER_ERROR</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_CUTTER_ERROR" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a cutter error.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_FIRST_LAYER_ERROR">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_FIRST_LAYER_ERROR</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_FIRST_LAYER_ERROR" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a first layer error.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.PAUSED_NOZZLE_CLOG">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">PAUSED_NOZZLE_CLOG</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.PAUSED_NOZZLE_CLOG" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is paused due to a nozzle clog.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.UNKNOWN">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">UNKNOWN</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.UNKNOWN" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer status is unknown.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bambulabs_api.PrintStatus.IDLE">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.PrintStatus.</span></span><span class="sig-name descname"><span class="pre">IDLE</span></span><a class="headerlink" href="#bambulabs_api.PrintStatus.IDLE" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>The printer is idle.</p>
 </dd>
 </dl>
 </dd></dl>
