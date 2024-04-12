@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bambulabs_api"
-version = "2.1.0"
+version = "2.1.1"
 authors = [
   { name="Chris Ioannidis", email="chris.ioannidis23@imperial.ac.uk" },
 ]
@@ -21,3 +21,7 @@ classifiers = [
 Homepage = "https://github.com/acse-ci223/bambulabs_api"
 Docs = "https://acse-ci223.github.io/bambulabs_api/"
 Issues = "https://github.com/acse-ci223/bambulabs_api/issues"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+paho-mqtt = "^2.0.0"
