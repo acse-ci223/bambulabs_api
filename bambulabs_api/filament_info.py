@@ -6,6 +6,19 @@ __all__ = ["AMSFilamentSettings", "Filament"]
 
 @dataclass(frozen=True)
 class AMSFilamentSettings:
+    """
+    Dataclass for the filament settings
+    
+    The filament settings are a set of values that indicate the settings of the filament.
+    
+    Attributes
+    ----------
+    
+    tray_info_idx: The tray info index.
+    nozzle_temp_min: The minimum nozzle temperature.
+    nozzle_temp_max: The maximum nozzle temperature.
+    tray_type: The tray type.
+    """
     tray_info_idx: str
     nozzle_temp_min: int
     nozzle_temp_max: int
@@ -13,6 +26,35 @@ class AMSFilamentSettings:
 
 
 class Filament(AMSFilamentSettings, Enum):
+    """
+    Enum class for the filament settings
+    
+    The filament settings are a set of values that indicate the settings of the filament.
+    
+    Attributes
+    ----------
+    
+    POLYLITE_PLA: The Polylite PLA filament settings.
+    POLYTERRA_PLA: The Polyterra PLA filament settings.
+    BAMBU_ABS: The Bambu ABS filament settings.
+    BAMBU_PA_CF: The Bambu PA-CF filament settings.
+    BAMBU_PC: The Bambu PC filament settings.
+    BAMBU_PLA_Basic: The Bambu PLA Basic filament settings.
+    BAMBU_PLA_Matte: The Bambu PLA Matte filament settings.
+    SUPPORT_G: The Support G filament settings.
+    SUPPORT_W: The Support W filament settings.
+    BAMBU_TPU_95A: The Bambu TPU 95A filament settings.
+    ABS: The ABS filament settings.
+    ASA: The ASA filament settings.
+    PA: The PA filament settings.
+    PA_CF: The PA-CF filament settings.
+    PC: The PC filament settings.
+    PETG: The PETG filament settings.
+    PLA: The PLA filament settings.
+    PLA_CF: The PLA-CF filament settings.
+    PVA: The PVA filament settings.
+    TPU: The TPU filament settings.
+    """
     POLYLITE_PLA = "GFL00", 190, 250, "PLA"
     POLYTERRA_PLA = "GFL01", 190, 250, "PLA"
     BAMBU_ABS = "GFB00", 240, 270, "ABS"

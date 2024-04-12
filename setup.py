@@ -7,9 +7,9 @@ setup(
     name="bambulabs_api",
     use_scm_version=True,
     setup_requires=["setuptools_scm"],
-    description="API for BambuLabs 3D Printers over MQTT",
+    description="API for BambuLabs 3D Printers",
     long_descritpion="""
-    API for BambuLabs 3D Printers over MQTT
+    API for BambuLabs 3D Printers
     """,
     url="https://github.com/acse-ci223/bambulabs_api",
     author="Chris Ioannidis",

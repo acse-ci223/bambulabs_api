@@ -4,6 +4,53 @@ __all__ = ["PrintStatus"]
 
 
 class PrintStatus(Enum):
+    """
+    Enum class for the printer status
+    
+    The printer status is a value that indicates the current state of the printer.
+
+    Attributes
+    ----------
+
+    PRINTING: The printer is currently printing.
+    AUTO_BED_LEVELING: The printer is performing an automatic bed leveling.
+    HEATBED_PREHEATING: The printer is preheating the heatbed.
+    SWEEPING_XY_MECH_MODE: The printer is performing a sweeping XY mechanical mode.
+    CHANGING_FILAMENT: The printer is changing the filament.
+    M400_PAUSE: The printer is paused.
+    PAUSED_FILAMENT_RUNOUT: The printer is paused due to filament runout.
+    HEATING_HOTEND: The printer is heating the hotend.
+    CALIBRATING_EXTRUSION: The printer is calibrating the extrusion.
+    SCANNING_BED_SURFACE: The printer is scanning the bed surface.
+    INSPECTING_FIRST_LAYER: The printer is inspecting the first layer.
+    IDENTIFYING_BUILD_PLATE_TYPE: The printer is identifying the build plate type.
+    CALIBRATING_MICRO_LIDAR: The printer is calibrating the micro LiDAR.
+    HOMING_TOOLHEAD: The printer is homing the toolhead.
+    CLEANING_NOZZLE_TIP: The printer is cleaning the nozzle tip.
+    CHECKING_EXTRUDER_TEMPERATURE: The printer is checking the extruder temperature.
+    PAUSED_USER: The printer is paused by the user.
+    PAUSED_FRONT_COVER_FALLING: The printer is paused due to the front cover falling.
+    CALIBRATING_LIDAR: The printer is calibrating the LiDAR.
+    CALIBRATING_EXTRUSION_FLOW: The printer is calibrating the extrusion flow.
+    PAUSED_NOZZLE_TEMPERATURE_MALFUNCTION: The printer is paused due to a nozzle temperature malfunction.
+    PAUSED_HEAT_BED_TEMPERATURE_MALFUNCTION: The printer is paused due to a heat bed temperature malfunction.
+    FILAMENT_UNLOADING: The printer is unloading the filament.
+    PAUSED_SKIPPED_STEP: The printer is paused due to a skipped step.
+    FILAMENT_LOADING: The printer is loading the filament.
+    CALIBRATING_MOTOR_NOISE: The printer is calibrating the motor noise.
+    PAUSED_AMS_LOST: The printer is paused due to an AMS lost.
+    PAUSED_LOW_FAN_SPEED_HEAT_BREAK: The printer is paused due to a low fan speed heat break.
+    PAUSED_CHAMBER_TEMPERATURE_CONTROL_ERROR: The printer is paused due to a chamber temperature control error.
+    COOLING_CHAMBER: The printer is cooling the chamber.
+    PAUSED_USER_GCODE: The printer is paused by the user GCODE.
+    MOTOR_NOISE_SHOWOFF: The printer is showing off the motor noise.
+    PAUSED_NOZZLE_FILAMENT_COVERED_DETECTED: The printer is paused due to a nozzle filament covered detected.
+    PAUSED_CUTTER_ERROR: The printer is paused due to a cutter error.
+    PAUSED_FIRST_LAYER_ERROR: The printer is paused due to a first layer error.
+    PAUSED_NOZZLE_CLOG: The printer is paused due to a nozzle clog.
+    UNKNOWN: The printer status is unknown.
+    IDLE: The printer is idle.
+    """  # noqa
     PRINTING = 0
     AUTO_BED_LEVELING = 1
     HEATBED_PREHEATING = 2
