@@ -95,7 +95,7 @@ class PrintStatus(Enum):
         return cls.UNKNOWN
 
 
-class GcodeState(Enum):
+class GcodeState(str, Enum):
     """
     Enum class for the Gcode State
 
@@ -111,10 +111,10 @@ class GcodeState(Enum):
     UNKNOWN: The printer state is unknown.
     """
     IDLE = "IDLE"
-    PREPARING = "PREPARE"
+    PREPARE = "PREPARE"
     RUNNING = "RUNNING"
-    PAUSED = "PAUSE"
-    FINISHED = "FINISH"
+    PAUSE = "PAUSE"
+    FINISH = "FINISH"
     UNKNOWN = "UNKNOWN"
 
     @classmethod
