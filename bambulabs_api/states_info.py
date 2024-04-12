@@ -1,6 +1,6 @@
 from enum import Enum
 
-__all__ = ["PrintStatus"]
+__all__ = ["PrintStatus", "GcodeState"]
 
 
 class PrintStatus(Enum):
@@ -89,6 +89,33 @@ class PrintStatus(Enum):
     PAUSED_NOZZLE_CLOG = 35
     UNKNOWN = None
     IDLE = 255
+
+    @classmethod
+    def _missing_(cls, value):
+        return cls.UNKNOWN
+
+
+class GcodeState(Enum):
+    """
+    Enum class for the Gcode State
+    
+    Gcode State that the printer can be in.
+
+    Attributes
+    ----------
+    IDLE: The printer is idle.
+    PREPARING: The printer is preparing (File upload).
+    RUNNING: The printer is running.
+    PAUSED: The printer is paused.
+    FINISHED: The printer has finished.
+    UNKNOWN: The printer state is unknown.
+    """
+    IDLE = "IDLE"
+    PREPARING = "PREPARE"
+    RUNNING = "RUNNING"
+    PAUSED = "PAUSE"
+    FINISHED = "FINISH"
+    UNKNOWN = "UNKNOWN"
 
     @classmethod
     def _missing_(cls, value):
