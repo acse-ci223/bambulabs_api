@@ -113,7 +113,7 @@ class PrinterMQTTClient:
         """
         return self.__get("mc_remaining_time", None)
 
-    def get_printer_state(self) -> PrintStatus:
+    def get_printer_state(self) -> GcodeState:
         """
         Get the printer state
 
@@ -231,7 +231,7 @@ class PrinterMQTTClient:
         Returns:
             str: print_status
         """
-        if self.get_printer_state() == "PAUSED":
+        if self.get_printer_state() == GcodeState.PAUSED:
             return True
         return self.__publish_command({"print": {"command": "pause"}})
 
@@ -242,7 +242,7 @@ class PrinterMQTTClient:
         Returns:
             str: print_status
         """
-        if self.get_printer_state() == "RUNNING":
+        if self.get_printer_state() == GcodeState.RUNNING:
             return True
         return self.__publish_command({"print": {"command": "resume"}})
 
