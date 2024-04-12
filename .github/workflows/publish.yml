@@ -11,27 +11,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
           python-version: "3.10"
+      
       - name: Install dependencies
-        run: python3 -m pip install toml
+        run: |
+          python -m pip install --upgrade pip
+          pip install toml
+      
       - name: Get version from pyproject.toml file
         id: get_version
         run: |
-          version=$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
+          version=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
           echo "VERSION=${version}" >> $GITHUB_ENV
+      
       - name: Install pypa/build
-        run: python3 -m pip install build --user
+        run: python -m pip install build --user
+      
       - name: Build a binary wheel and a source tarball
-        run: python3 -m build
+        run: python -m build
+      
       - name: Store the distribution packages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: python-package-distributions
           path: dist/
+      
+      - name: Set VERSION for next jobs
+        env:
+          VERSION: ${{ steps.get_version.outputs.VERSION }}
+        run: echo "VERSION=${{ steps.get_version.outputs.VERSION }}"
 
   publish-to-pypi:
     name: Publish distribution to PyPI
@@ -46,15 +60,21 @@ jobs:
 
     steps:
       - name: Download all the dists
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: python-package-distributions
           path: dist/
+      
       - name: Publish distribution to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
+      
+      - name: Set VERSION for next jobs
+        env:
+          VERSION: ${{ needs.build.outputs.VERSION }}
+        run: echo "VERSION=${{ needs.build.outputs.VERSION }}"
 
   github-release:
     name: Sign the Python distribution with Sigstore and upload them to GitHub Release
@@ -66,20 +86,27 @@ jobs:
       id-token: write
 
     steps:
+      - name: Import VERSION environment variable
+        shell: bash
+        run: echo "VERSION=${{ needs.publish-to-pypi.outputs.VERSION }}" >> $GITHUB_ENV
+      
       - name: Download all the dists
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: python-package-distributions
           path: dist/
+      
       - name: Sign the dists with Sigstore
         uses: sigstore/gh-action-sigstore-python@v1.2.3
         with:
           inputs: ./dist/*.tar.gz ./dist/*.whl
+      
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release create "${{ env.VERSION }}" --repo "${{ github.repository }}" --notes ""
+        run: gh release create "${{ env.VERSION }}" --latest --repo "${{ github.repository }}" --notes ""
+      
       - name: Upload artifact signatures to GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "${{ env.VERSION }}" dist/** --repo "${{ github.repository }}"
+        run: gh release upload "${{ env.VERSION }}" --latest dist/** --repo "${{ github.repository }}"
