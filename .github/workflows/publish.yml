@@ -73,6 +73,7 @@ jobs:
       - name: Get version from pyproject.toml file
         id: get_version
         run: |
+          pwd
           ls
           cd $GITHUB_WORKSPACE
           ls
