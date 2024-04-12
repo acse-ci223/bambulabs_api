@@ -231,7 +231,7 @@ class PrinterMQTTClient:
         Returns:
             str: print_status
         """
-        if self.get_printer_state() == GcodeState.PAUSED:
+        if self.get_printer_state() == GcodeState.PAUSE:
             return True
         return self.__publish_command({"print": {"command": "pause"}})
 
