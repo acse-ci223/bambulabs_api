@@ -70,7 +70,7 @@ jobs:
           inputs: ./dist/*.tar.gz ./dist/*.whl
       - name: Get version from PyToml file
         id: get_version
-        run: echo ::set-output name=version::$(python3 -c "import toml; print(toml.load('pyproject.toml')['tool']['poetry']['version'])")
+        run: echo ::set-output name=version::$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ github.token }}
