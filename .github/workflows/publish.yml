@@ -68,14 +68,19 @@ jobs:
         uses: sigstore/gh-action-sigstore-python@v1.2.3
         with:
           inputs: ./dist/*.tar.gz ./dist/*.whl
-      - name: Get version from PyToml file
+      - name: Install dependencies
+        run: python3 -m pip install toml
+      - name: Get version from pyproject.toml file
         id: get_version
-        run: echo ::set-output name=version::$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
+        run: |
+          version=$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
+          echo "VERSION=${version}" >> $GITHUB_ENV
       - name: Create GitHub Release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: gh release create "${{ steps.get_version.outputs.version }}" --repo "${{ github.repository }}" --notes ""
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create "${{ env.VERSION }}" --repo "${{ github.repository }}" --notes ""
       - name: Upload artifact signatures to GitHub Release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ steps.get_version.outputs.version }}" dist/** --repo "${{ github.repository }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "${{ env.VERSION }}" dist/** --repo "${{ github.repository }}"
+        
