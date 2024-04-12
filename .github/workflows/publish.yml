@@ -29,8 +29,7 @@ jobs:
         run: |
           version=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
           echo "VERSION=${version}" >> $GITHUB_ENV
-          echo "VERSION=${version}"
-          echo "VERSION=${{ steps.get_version.outputs.VERSION }}"
+          echo "VERSION=${{ env.VERSION }}"
       
       - name: Install pypa/build
         run: python -m pip install build --user
@@ -46,8 +45,8 @@ jobs:
       
       - name: Set VERSION for next jobs
         env:
-          VERSION: ${{ steps.get_version.outputs.VERSION }}
-        run: echo "VERSION=${{ steps.get_version.outputs.VERSION }}"
+          VERSION: ${{ env.VERSION }}
+        run: echo "VERSION=${{ env.VERSION }}"
 
   publish-to-pypi:
     name: Publish distribution to PyPI
@@ -76,7 +75,9 @@ jobs:
       - name: Set VERSION for next jobs
         env:
           VERSION: ${{ needs.build.outputs.VERSION }}
-        run: echo "VERSION=${{ needs.build.outputs.VERSION }}"
+        run: |
+          echo "VERSION=${{ needs.build.outputs.VERSION }}"
+          echo "VERSION=${{ env.VERSION }}"
 
   github-release:
     name: Sign the Python distribution with Sigstore and upload them to GitHub Release
