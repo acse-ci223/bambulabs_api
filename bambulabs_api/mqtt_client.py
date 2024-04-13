@@ -514,14 +514,16 @@ class PrinterMQTTClient:
 
     def ams_filament(self) -> None:
         """
-        Update ams filaments
+        Get the filament information from the AMS system
         """
-        ams_info = self.__get("ams")
+        ams_info: dict[str, Any] = self.__get("ams")
 
-        if not ams_info:
+        if not ams_info or ams_info.get("ams_exist_bits", "0") == "0":
             return
 
-        for k, v in enumerate(ams_info):
+        ams_units: list[dict] = ams_info.get("ams", [])
+
+        for k, v in enumerate(ams_units):
             humidity = v.get("humidity")
             temp = float(v.get("temp", 0.0))
             id = int(v.get("id", k))
