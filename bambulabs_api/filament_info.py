@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any
 
 __all__ = ["AMSFilamentSettings", "Filament"]
 
@@ -85,3 +86,44 @@ class Filament(AMSFilamentSettings, Enum):
                     return filament
 
         raise ValueError(f"Filament {value} not found")
+
+
+@dataclass
+class FilamentTray:
+    k: float
+    n: int
+    tag_uid: str
+    tray_id_name: str
+    tray_info_idx: str
+    tray_type: str
+    tray_sub_brands: str
+    tray_color: str
+    tray_weight: str
+    tray_diameter: str
+    tray_temp: str
+    tray_time: str
+    bed_temp_type: str
+    bed_temp: str
+    nozzle_temp_max: int
+    nozzle_temp_min: int
+    xcam_info: str
+    tray_uuid: str
+
+    @staticmethod
+    def keys():
+        return FilamentTray.__dataclass_fields__.keys()
+
+    @staticmethod
+    def from_dict(d: dict[str, Any]):
+        keys = set(FilamentTray.keys())
+        d = {k: v for k, v in d.items() if k in keys}
+
+        return FilamentTray(**d)
+
+    def filament(self) -> Filament:
+        return Filament(
+            self.tray_info_idx,
+            self.nozzle_temp_min,
+            self.nozzle_temp_max,
+            self.tray_type
+            )

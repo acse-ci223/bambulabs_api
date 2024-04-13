@@ -115,6 +115,7 @@ class GcodeState(str, Enum):
     RUNNING = "RUNNING"
     PAUSE = "PAUSE"
     FINISH = "FINISH"
+    FAILED = "FAILED"
     UNKNOWN = "UNKNOWN"
 
     @classmethod

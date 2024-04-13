@@ -1,3 +1,4 @@
+from collections import defaultdict
 import json
 import logging
 import ssl
@@ -6,7 +7,10 @@ from typing import Any
 import paho.mqtt.client as mqtt
 from paho.mqtt.enums import CallbackAPIVersion
 
-from .filament_info import Filament
+from bambulabs_api.ams import AMS
+from bambulabs_api.printer_info import NozzleType
+
+from .filament_info import Filament, FilamentTray
 from .states_info import GcodeState, PrintStatus
 
 
@@ -37,6 +41,8 @@ class PrinterMQTTClient:
         self.command_topic = f"device/{printer_serial}/request"
         logging.info(f"{self.command_topic}")   # noqa  # pylint: disable=logging-fstring-interpolation
         self._data = {}
+
+        self._ams = defaultdict(AMS())
 
     def _on_message(self, client, userdata, msg) -> None:  # pylint: disable=unused-argument  # noqa
         # Current date and time
@@ -460,3 +466,75 @@ class PrinterMQTTClient:
             float: nozzle temperature target
         """
         return float(self.__get("nozzle_target_temper", 0.0))
+
+    def current_layer_num(self) -> int:
+        """
+        Get the number of layers of the current/last print
+
+        Returns:
+            int: number of layers
+        """
+        return int(self.__get("layer_num", 0))
+
+    def total_layer_num(self) -> int:
+        """
+        Get the total number of layers of the current/last print
+
+        Returns:
+            int: number of layers
+        """
+        return int(self.__get("total_layer_num", 0))
+
+    def gcode_file_prepare_percentage(self) -> int:
+        """
+        Get the gcode file preparation percentage
+
+        Returns:
+            int: percentage
+        """
+        return int(self.__get("gcode_file_prepare_percent", 0))
+
+    def nozzle_diameter(self) -> float:
+        """
+        Get the nozzle diameter currently registered to printer
+
+        Returns:
+            float: nozzle diameter
+        """
+        return float(self.__get("nozzle_diameter", 0))
+
+    def nozzle_type(self) -> NozzleType:
+        """
+        Get the nozzle type currently registered to printer
+
+        Returns:
+            str: nozzle diameter
+        """
+        return NozzleType(self.__get("nozzle_diameter", "stainless_steel"))
+
+    def ams_filament(self) -> None:
+        """
+        Update ams filaments
+        """
+        ams_info = self.__get("ams")
+
+        if not ams_info:
+            return
+
+        for k, v in enumerate(ams_info):
+            humidity = v.get("humidity")
+            temp = float(v.get("temp", 0.0))
+            id = int(v.get("id", k))
+
+            ams = AMS(humidity=humidity, temperature=temp)
+
+            trays: list[dict] = v.get("tray")
+
+            if trays:
+                for tray_id, tray in enumerate(trays):
+                    tray_id = int(tray.get("id", tray_id))
+                    ams.set_filament_tray(
+                        tray_index=tray_id,
+                        filament_tray=FilamentTray.from_dict(tray))
+
+            self._ams[id] = ams
