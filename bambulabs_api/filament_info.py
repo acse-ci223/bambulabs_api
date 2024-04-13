@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from functools import cached_property
 from typing import Any
 
 __all__ = ["AMSFilamentSettings", "Filament"]
@@ -161,6 +162,7 @@ class FilamentTray:
 
         return FilamentTray(**d)
 
+    @cached_property
     def filament(self) -> Filament:
         """
         Get the filament information from the tray information.
@@ -173,4 +175,4 @@ class FilamentTray:
             self.nozzle_temp_min,
             self.nozzle_temp_max,
             self.tray_type
-            )
+        )
