@@ -1,4 +1,3 @@
-from collections import defaultdict
 import json
 import logging
 import ssl
@@ -42,7 +41,7 @@ class PrinterMQTTClient:
         logging.info(f"{self.command_topic}")   # noqa  # pylint: disable=logging-fstring-interpolation
         self._data = {}
 
-        self._ams = defaultdict(AMS())
+        self._ams: dict[int, AMS] = {}
 
     def _on_message(self, client, userdata, msg) -> None:  # pylint: disable=unused-argument  # noqa
         # Current date and time
