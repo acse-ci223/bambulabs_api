@@ -109,12 +109,14 @@ class GcodeState(str, Enum):
     PAUSED: The printer is paused.
     FINISHED: The printer has finished.
     UNKNOWN: The printer state is unknown.
+    FAILED: The printer has failed.
     """
     IDLE = "IDLE"
     PREPARE = "PREPARE"
     RUNNING = "RUNNING"
     PAUSE = "PAUSE"
     FINISH = "FINISH"
+    FAILED = "FAILED"
     UNKNOWN = "UNKNOWN"
 
     @classmethod
