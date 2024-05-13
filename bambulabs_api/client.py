@@ -187,8 +187,12 @@ class Printer:
             raise Exception(f"Exception occurred during file upload: {e}")  # noqa  # pylint: disable=raise-missing-from,broad-exception-raised
         finally:
             file.close()
+        return "No file uploaded."
 
-    def start_print(self, filename: str, plate_number: int) -> bool:
+    def start_print(self, filename: str,
+                    plate_number: int,
+                    use_ams: bool = True,
+                    ams_mapping: list[int] = [0]) -> bool:
         """
         Start printing a file.
 
@@ -198,6 +202,11 @@ class Printer:
             The name of the file to be printed.
         plate_number : int
             The plate number of the file to be printed.
+        use_ams : bool, optional
+            Whether to use the AMS system, by default True.
+        ams_mapping : list[int], optional
+            The mapping of the filament trays to the plate numbers,
+            by default [0].
 
         Returns
         -------
@@ -205,7 +214,9 @@ class Printer:
             True if the file is printed successfully.
         """
         return self.__printerMQTTClient.start_print_3mf(filename,
-                                                        plate_number)
+                                                        plate_number,
+                                                        use_ams,
+                                                        ams_mapping)
 
     def stop_print(self) -> bool:
         """

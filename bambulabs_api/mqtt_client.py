@@ -1,6 +1,7 @@
 import json
 import logging
 import ssl
+import datetime
 from typing import Any
 
 import paho.mqtt.client as mqtt
@@ -37,9 +38,12 @@ class PrinterMQTTClient:
         self._client.on_connect = self._on_connect
         self._client.on_message = self._on_message
 
+        self.printer_timeout: int = 10
+        self._last_update: int = int(datetime.datetime.now().timestamp())
+
         self.command_topic = f"device/{printer_serial}/request"
         logging.info(f"{self.command_topic}")   # noqa  # pylint: disable=logging-fstring-interpolation
-        self._data = {}
+        self._data: dict = {}
 
         self._ams: dict[int, AMS] = {}
 
@@ -98,6 +102,8 @@ class PrinterMQTTClient:
         return self._data.get(key, default)
 
     def manual_update(self) -> bool:
+        if self._last_update + self.printer_timeout < int(datetime.datetime.now().timestamp()):  # noqa
+            return False
         return self.__publish_command({"pushing": {"command": "pushall"}})
 
     def get_last_print_percentage(self) -> int | str | None:
@@ -188,9 +194,18 @@ class PrinterMQTTClient:
 
         return light_report[0].get("mode", "unknown")
 
-    def start_print_3mf(self, filename: str, plate_number: int) -> bool:
+    def start_print_3mf(self, filename: str,
+                        plate_number: int,
+                        use_ams: bool = True,
+                        ams_mapping: list[int] = [0]) -> bool:
         """
         Start the print
+
+        Parameters:
+            filename (str): The name of the file to print
+            plate_number (int): The plate number to print to
+            use_ams (bool, optional): Use the AMS system. Defaults to True.
+            ams_mapping (list[int], optional): The AMS mapping. Defaults to [0].
 
         Returns:
             str: print_status
@@ -200,14 +215,15 @@ class PrinterMQTTClient:
                 "print":
                 {
                     "command": "project_file",
-                    "param": f"Metadata/plate_{plate_number}.gcode",
+                    "param": f"Metadata/plate_{int(plate_number)}.gcode",
                     "subtask_name": filename,
                     "bed_leveling": True,
                     "flow_calibration": True,
                     "vibration_calibration": True,
                     "url": f"ftp://{filename}",
                     "layer_inspect": False,
-                    "use_ams": False,
+                    "use_ams": bool(use_ams),
+                    "ams_mapping": list(ams_mapping),
                 }
             })
 
@@ -275,11 +291,11 @@ class PrinterMQTTClient:
 
     def set_bed_height(self, height: int) -> bool:
         """
-        Set the absolute height of the bed (Z-axis). 
+        Set the absolute height of the bed (Z-axis).
         0 is the bed at the nozzle tip and 256 is the bed at the bottom of the printer.
 
         Args:
-            height (int): height to set the bed to 
+            height (int): height to set the bed to
 
         Returns:
             bool: success of the bed height setting
