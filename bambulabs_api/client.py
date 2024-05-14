@@ -427,3 +427,14 @@ class Printer:
             Base64 encoded image of the camera frame.
         """
         return self.__printerCamera.get_frame()
+
+    def get_current_state(self) -> dict:
+        """
+        Get the current state of the printer.
+
+        Returns
+        -------
+        dict
+            The current state of the printer.
+        """
+        return self.__printerMQTTClient.get_current_state()
