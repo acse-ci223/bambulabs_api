@@ -4,6 +4,8 @@ and getting all the printer data.
 """
 
 from typing import BinaryIO
+
+from bambulabs_api.states_info import PrintStatus
 from .camera_client import PrinterCamera
 from .ftp_client import PrinterFTPClient
 from .mqtt_client import PrinterMQTTClient
@@ -438,3 +440,14 @@ class Printer:
             Base64 encoded image of the camera frame.
         """
         return self.__printerCamera.get_frame()
+
+    def get_current_state(self) -> PrintStatus:
+        """
+        Get the current state of the printer.
+
+        Returns
+        -------
+        PrintStatus
+            The current state of the printer.
+        """
+        return self.__printerMQTTClient.get_current_state()

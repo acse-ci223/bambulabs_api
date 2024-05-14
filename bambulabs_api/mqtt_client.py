@@ -227,14 +227,14 @@ class PrinterMQTTClient:
                 }
             })
 
-    def get_current_state(self) -> str:
+    def get_current_state(self) -> PrintStatus:
         """
         Get the current printer state from stg_cur
 
         Returns:
-            str: current_state
+            PrintStatus: current_state
         """
-        return PrintStatus(self.__get("stg_cur", -1)).name
+        return PrintStatus(self.__get("stg_cur", -1))
 
     def stop_print(self) -> bool:
         """
