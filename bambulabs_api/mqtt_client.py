@@ -1,12 +1,16 @@
 import json
 import logging
 import ssl
+import datetime
 from typing import Any
 
 import paho.mqtt.client as mqtt
 from paho.mqtt.enums import CallbackAPIVersion
 
-from .filament_info import Filament
+from bambulabs_api.ams import AMS
+from bambulabs_api.printer_info import NozzleType
+
+from .filament_info import Filament, FilamentTray
 from .states_info import GcodeState, PrintStatus
 
 
@@ -34,9 +38,14 @@ class PrinterMQTTClient:
         self._client.on_connect = self._on_connect
         self._client.on_message = self._on_message
 
+        self.printer_timeout: int = 10
+        self._last_update: int = int(datetime.datetime.now().timestamp())
+
         self.command_topic = f"device/{printer_serial}/request"
         logging.info(f"{self.command_topic}")   # noqa  # pylint: disable=logging-fstring-interpolation
-        self._data = {}
+        self._data: dict = {}
+
+        self._ams: dict[int, AMS] = {}
 
     def _on_message(self, client, userdata, msg) -> None:  # pylint: disable=unused-argument  # noqa
         # Current date and time
@@ -93,6 +102,8 @@ class PrinterMQTTClient:
         return self._data.get(key, default)
 
     def manual_update(self) -> bool:
+        if self._last_update + self.printer_timeout < int(datetime.datetime.now().timestamp()):  # noqa
+            return False
         return self.__publish_command({"pushing": {"command": "pushall"}})
 
     def get_last_print_percentage(self) -> int | str | None:
@@ -183,9 +194,18 @@ class PrinterMQTTClient:
 
         return light_report[0].get("mode", "unknown")
 
-    def start_print_3mf(self, filename: str, plate_number: int) -> bool:
+    def start_print_3mf(self, filename: str,
+                        plate_number: int,
+                        use_ams: bool = True,
+                        ams_mapping: list[int] = [0]) -> bool:
         """
         Start the print
+
+        Parameters:
+            filename (str): The name of the file to print
+            plate_number (int): The plate number to print to
+            use_ams (bool, optional): Use the AMS system. Defaults to True.
+            ams_mapping (list[int], optional): The AMS mapping. Defaults to [0].
 
         Returns:
             str: print_status
@@ -195,14 +215,15 @@ class PrinterMQTTClient:
                 "print":
                 {
                     "command": "project_file",
-                    "param": f"Metadata/plate_{plate_number}.gcode",
+                    "param": f"Metadata/plate_{int(plate_number)}.gcode",
                     "subtask_name": filename,
                     "bed_leveling": True,
                     "flow_calibration": True,
                     "vibration_calibration": True,
                     "url": f"ftp://{filename}",
                     "layer_inspect": False,
-                    "use_ams": False,
+                    "use_ams": bool(use_ams),
+                    "ams_mapping": list(ams_mapping),
                 }
             })
 
@@ -270,11 +291,11 @@ class PrinterMQTTClient:
 
     def set_bed_height(self, height: int) -> bool:
         """
-        Set the absolute height of the bed (Z-axis). 
+        Set the absolute height of the bed (Z-axis).
         0 is the bed at the nozzle tip and 256 is the bed at the bottom of the printer.
 
         Args:
-            height (int): height to set the bed to 
+            height (int): height to set the bed to
 
         Returns:
             bool: success of the bed height setting
@@ -460,3 +481,77 @@ class PrinterMQTTClient:
             float: nozzle temperature target
         """
         return float(self.__get("nozzle_target_temper", 0.0))
+
+    def current_layer_num(self) -> int:
+        """
+        Get the number of layers of the current/last print
+
+        Returns:
+            int: number of layers
+        """
+        return int(self.__get("layer_num", 0))
+
+    def total_layer_num(self) -> int:
+        """
+        Get the total number of layers of the current/last print
+
+        Returns:
+            int: number of layers
+        """
+        return int(self.__get("total_layer_num", 0))
+
+    def gcode_file_prepare_percentage(self) -> int:
+        """
+        Get the gcode file preparation percentage
+
+        Returns:
+            int: percentage
+        """
+        return int(self.__get("gcode_file_prepare_percent", 0))
+
+    def nozzle_diameter(self) -> float:
+        """
+        Get the nozzle diameter currently registered to printer
+
+        Returns:
+            float: nozzle diameter
+        """
+        return float(self.__get("nozzle_diameter", 0))
+
+    def nozzle_type(self) -> NozzleType:
+        """
+        Get the nozzle type currently registered to printer
+
+        Returns:
+            str: nozzle diameter
+        """
+        return NozzleType(self.__get("nozzle_diameter", "stainless_steel"))
+
+    def ams_filament(self) -> None:
+        """
+        Get the filament information from the AMS system
+        """
+        ams_info: dict[str, Any] = self.__get("ams")
+
+        if not ams_info or ams_info.get("ams_exist_bits", "0") == "0":
+            return
+
+        ams_units: list[dict] = ams_info.get("ams", [])
+
+        for k, v in enumerate(ams_units):
+            humidity = v.get("humidity")
+            temp = float(v.get("temp", 0.0))
+            id = int(v.get("id", k))
+
+            ams = AMS(humidity=humidity, temperature=temp)
+
+            trays: list[dict] = v.get("tray")
+
+            if trays:
+                for tray_id, tray in enumerate(trays):
+                    tray_id = int(tray.get("id", tray_id))
+                    ams.set_filament_tray(
+                        tray_index=tray_id,
+                        filament_tray=FilamentTray.from_dict(tray))
+
+            self._ams[id] = ams

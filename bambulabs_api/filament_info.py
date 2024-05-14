@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
+from functools import cached_property
+from typing import Any
 
 __all__ = ["AMSFilamentSettings", "Filament"]
 
@@ -85,3 +87,92 @@ class Filament(AMSFilamentSettings, Enum):
                     return filament
 
         raise ValueError(f"Filament {value} not found")
+
+
+@dataclass
+class FilamentTray:
+    """
+    Dataclass for the filament tray
+
+    Attributes
+    ----------
+
+    k: The k value.
+    n: The n value.
+    tag_uid: The tag UID.
+    tray_id_name: The tray ID name.
+    tray_info_idx: The tray info index.
+    tray_type: The tray type.
+    tray_sub_brands: The tray sub brands.
+    tray_color: The filament color of the tray.
+    tray_weight: The tray weight.
+    tray_diameter: The tray diameter.
+    tray_temp: The tray temperature.
+    tray_time: The tray time.
+    bed_temp_type: The bed temperature type.
+    bed_temp: The bed temperature.
+    nozzle_temp_max: The maximum nozzle temperature for the filament.
+    nozzle_temp_min: The minimum nozzle temperature for the filament.
+    xcam_info: The XCam information.
+    tray_uuid: The tray UUID.
+    """
+    k: float
+    n: int
+    tag_uid: str
+    tray_id_name: str
+    tray_info_idx: str
+    tray_type: str
+    tray_sub_brands: str
+    tray_color: str
+    tray_weight: str
+    tray_diameter: str
+    tray_temp: str
+    tray_time: str
+    bed_temp_type: str
+    bed_temp: str
+    nozzle_temp_max: int
+    nozzle_temp_min: int
+    xcam_info: str
+    tray_uuid: str
+
+    @staticmethod
+    def keys() -> set[str]:
+        """
+        Get the keys of the dataclass.
+
+        Returns:
+            set[str]: the keys of the dataclass
+        """
+        return FilamentTray.__dataclass_fields__.keys()
+
+    @staticmethod
+    def from_dict(d: dict[str, Any]):
+        """
+        Initialize the dataclass from a dictionary.
+
+        Args:
+            d (dict[str, Any]): dictionary to initialize the dataclass with
+            the keys of the dataclass.
+
+        Returns:
+            FilamentTray: the dataclass initialized with the dictionary
+        """
+        keys = set(FilamentTray.keys())
+        d = {k: v for k, v in d.items() if k in keys}
+
+        return FilamentTray(**d)
+
+    @cached_property
+    def filament(self) -> Filament:
+        """
+        Get the filament information from the tray information.
+
+        Returns:
+            Filament: filament information
+        """
+        return Filament(
+            self.tray_info_idx,
+            self.nozzle_temp_min,
+            self.nozzle_temp_max,
+            self.tray_type
+        )
