@@ -40,7 +40,7 @@ if __name__ == '__main__':
     print(f'Access Code: {ACCESS_CODE}')
 
     # Create a new instance of the API
-    printer = bl.Printer(IP, SERIAL, ACCESS_CODE)
+    printer = bl.Printer(IP, ACCESS_CODE, SERIAL)
 
     # Connect to the Bambulabs 3D printer
     printer.connect()
