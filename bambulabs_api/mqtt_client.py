@@ -71,7 +71,11 @@ class PrinterMQTTClient:
         rc : int
             The connection result
         """
-        client.subscribe(f"device/{self._printer_serial}/report")
+        if rc == 0:
+            print("Connected successfully")
+            client.subscribe(f"device/{self._printer_serial}/report")
+        else:
+            print(f"Connection failed with result code {rc}")
 
     def connect(self) -> None:
         """
