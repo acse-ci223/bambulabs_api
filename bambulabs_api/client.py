@@ -194,7 +194,9 @@ class Printer:
     def start_print(self, filename: str,
                     plate_number: int,
                     use_ams: bool = True,
-                    ams_mapping: list[int] = [0]) -> bool:
+                    ams_mapping: list[int] = [0],
+                    skip_objects: list[int] = [],
+                    ) -> bool:
         """
         Start printing a file.
 
@@ -209,6 +211,8 @@ class Printer:
         ams_mapping : list[int], optional
             The mapping of the filament trays to the plate numbers,
             by default [0].
+        skip_objects (list[int], optional): List of gcode objects to skip.
+            Defaults to [].
 
         Returns
         -------
@@ -218,7 +222,8 @@ class Printer:
         return self.__printerMQTTClient.start_print_3mf(filename,
                                                         plate_number,
                                                         use_ams,
-                                                        ams_mapping)
+                                                        ams_mapping,
+                                                        skip_objects)
 
     def stop_print(self) -> bool:
         """

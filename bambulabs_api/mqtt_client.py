@@ -197,7 +197,9 @@ class PrinterMQTTClient:
     def start_print_3mf(self, filename: str,
                         plate_number: int,
                         use_ams: bool = True,
-                        ams_mapping: list[int] = [0]) -> bool:
+                        ams_mapping: list[int] = [0],
+                        skip_objects: list[int] = []
+                        ) -> bool:
         """
         Start the print
 
@@ -206,6 +208,8 @@ class PrinterMQTTClient:
             plate_number (int): The plate number to print to
             use_ams (bool, optional): Use the AMS system. Defaults to True.
             ams_mapping (list[int], optional): The AMS mapping. Defaults to [0].
+            skip_objects (list[int], optional): List of gcode objects to skip.
+                Defaults to [].
 
         Returns:
             str: print_status
@@ -224,6 +228,7 @@ class PrinterMQTTClient:
                     "layer_inspect": False,
                     "use_ams": bool(use_ams),
                     "ams_mapping": list(ams_mapping),
+                    "skip_objects": skip_objects,
                 }
             })
 
