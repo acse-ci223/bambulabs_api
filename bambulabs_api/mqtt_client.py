@@ -198,7 +198,7 @@ class PrinterMQTTClient:
                         plate_number: int,
                         use_ams: bool = True,
                         ams_mapping: list[int] = [0],
-                        skip_objects: list[int] = []
+                        skip_objects: list[int] | None = None
                         ) -> bool:
         """
         Start the print
@@ -208,12 +208,15 @@ class PrinterMQTTClient:
             plate_number (int): The plate number to print to
             use_ams (bool, optional): Use the AMS system. Defaults to True.
             ams_mapping (list[int], optional): The AMS mapping. Defaults to [0].
-            skip_objects (list[int], optional): List of gcode objects to skip.
-                Defaults to [].
+            skip_objects (list[int] | None, optional): List of gcode objects to 
+                skip. Defaults to [].
 
         Returns:
             str: print_status
         """
+        if skip_objects is not None and not skip_objects:
+            skip_objects = None
+
         return self.__publish_command(
             {
                 "print":

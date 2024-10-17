@@ -195,7 +195,7 @@ class Printer:
                     plate_number: int,
                     use_ams: bool = True,
                     ams_mapping: list[int] = [0],
-                    skip_objects: list[int] = [],
+                    skip_objects: list[int] | None = None,
                     ) -> bool:
         """
         Start printing a file.
@@ -211,8 +211,8 @@ class Printer:
         ams_mapping : list[int], optional
             The mapping of the filament trays to the plate numbers,
             by default [0].
-        skip_objects (list[int], optional): List of gcode objects to skip.
-            Defaults to [].
+        skip_objects (list[int] | None, optional): List of gcode objects to
+            skip. Defaults to None.
 
         Returns
         -------
