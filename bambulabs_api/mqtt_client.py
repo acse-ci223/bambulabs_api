@@ -208,7 +208,7 @@ class PrinterMQTTClient:
             plate_number (int): The plate number to print to
             use_ams (bool, optional): Use the AMS system. Defaults to True.
             ams_mapping (list[int], optional): The AMS mapping. Defaults to [0].
-            skip_objects (list[int] | None, optional): List of gcode objects to 
+            skip_objects (list[int] | None, optional): List of gcode objects to
                 skip. Defaults to [].
 
         Returns:
@@ -234,6 +234,36 @@ class PrinterMQTTClient:
                     "skip_objects": skip_objects,
                 }
             })
+
+    def skip_objects(self, obj_list: list[int]) -> bool:
+        """
+        Skip Objects during printing.
+
+        Args:
+            obj_list (list[int]): object list to skip objects.
+
+        Returns:
+            bool: if publish command is successful
+        """
+        return self.__publish_command(
+            {
+                "print":
+                {
+                    "command": "skip_objects",
+                    "obj_list": obj_list,
+                }
+            })
+
+    def get_skipped_objects(self) -> list[int]:
+        """
+        Get skipped Objects.
+
+        Args:
+
+        Returns:
+            bool: if publish command is successful
+        """
+        return self.__get("s_obj", [])
 
     def get_current_state(self) -> PrintStatus:
         """

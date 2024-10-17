@@ -456,3 +456,26 @@ class Printer:
             The current state of the printer.
         """
         return self.__printerMQTTClient.get_current_state()
+
+    def get_skipped_objects(self) -> list[int]:
+        """
+        Get the current state of the printer.
+
+        Returns
+        -------
+        PrintStatus
+            The current state of the printer.
+        """
+        return self.__printerMQTTClient.get_skipped_objects()
+
+    def skip_objects(self, obj_list: list[int]) -> bool:
+        """
+        Skip Objects during printing.
+
+        Args:
+            obj_list (list[int]): object list to skip objects.
+
+        Returns:
+            bool: if publish command is successful
+        """
+        return self.__printerMQTTClient.skip_objects(obj_list=obj_list)
