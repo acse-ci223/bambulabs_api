@@ -197,7 +197,9 @@ class PrinterMQTTClient:
     def start_print_3mf(self, filename: str,
                         plate_number: int,
                         use_ams: bool = True,
-                        ams_mapping: list[int] = [0]) -> bool:
+                        ams_mapping: list[int] = [0],
+                        skip_objects: list[int] | None = None
+                        ) -> bool:
         """
         Start the print
 
@@ -206,10 +208,15 @@ class PrinterMQTTClient:
             plate_number (int): The plate number to print to
             use_ams (bool, optional): Use the AMS system. Defaults to True.
             ams_mapping (list[int], optional): The AMS mapping. Defaults to [0].
+            skip_objects (list[int] | None, optional): List of gcode objects to
+                skip. Defaults to [].
 
         Returns:
             str: print_status
         """
+        if skip_objects is not None and not skip_objects:
+            skip_objects = None
+
         return self.__publish_command(
             {
                 "print":
@@ -224,8 +231,39 @@ class PrinterMQTTClient:
                     "layer_inspect": False,
                     "use_ams": bool(use_ams),
                     "ams_mapping": list(ams_mapping),
+                    "skip_objects": skip_objects,
                 }
             })
+
+    def skip_objects(self, obj_list: list[int]) -> bool:
+        """
+        Skip Objects during printing.
+
+        Args:
+            obj_list (list[int]): object list to skip objects.
+
+        Returns:
+            bool: if publish command is successful
+        """
+        return self.__publish_command(
+            {
+                "print":
+                {
+                    "command": "skip_objects",
+                    "obj_list": obj_list,
+                }
+            })
+
+    def get_skipped_objects(self) -> list[int]:
+        """
+        Get skipped Objects.
+
+        Args:
+
+        Returns:
+            bool: if publish command is successful
+        """
+        return self.__get("s_obj", [])
 
     def get_current_state(self) -> PrintStatus:
         """

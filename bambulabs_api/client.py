@@ -194,7 +194,9 @@ class Printer:
     def start_print(self, filename: str,
                     plate_number: int,
                     use_ams: bool = True,
-                    ams_mapping: list[int] = [0]) -> bool:
+                    ams_mapping: list[int] = [0],
+                    skip_objects: list[int] | None = None,
+                    ) -> bool:
         """
         Start printing a file.
 
@@ -209,6 +211,8 @@ class Printer:
         ams_mapping : list[int], optional
             The mapping of the filament trays to the plate numbers,
             by default [0].
+        skip_objects (list[int] | None, optional): List of gcode objects to
+            skip. Defaults to None.
 
         Returns
         -------
@@ -218,7 +222,8 @@ class Printer:
         return self.__printerMQTTClient.start_print_3mf(filename,
                                                         plate_number,
                                                         use_ams,
-                                                        ams_mapping)
+                                                        ams_mapping,
+                                                        skip_objects)
 
     def stop_print(self) -> bool:
         """
@@ -451,3 +456,26 @@ class Printer:
             The current state of the printer.
         """
         return self.__printerMQTTClient.get_current_state()
+
+    def get_skipped_objects(self) -> list[int]:
+        """
+        Get the current state of the printer.
+
+        Returns
+        -------
+        PrintStatus
+            The current state of the printer.
+        """
+        return self.__printerMQTTClient.get_skipped_objects()
+
+    def skip_objects(self, obj_list: list[int]) -> bool:
+        """
+        Skip Objects during printing.
+
+        Args:
+            obj_list (list[int]): object list to skip objects.
+
+        Returns:
+            bool: if publish command is successful
+        """
+        return self.__printerMQTTClient.skip_objects(obj_list=obj_list)
