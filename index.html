@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
@@ -6,18 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BambuLabs API &mdash; BambuLabs API  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -59,6 +57,7 @@
 <li><a class="reference internal" href="#bambulabs_api.Printer.get_nozzle_temperature"><code class="docutils literal notranslate"><span class="pre">get_nozzle_temperature()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.get_percentage"><code class="docutils literal notranslate"><span class="pre">get_percentage()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.get_print_speed"><code class="docutils literal notranslate"><span class="pre">get_print_speed()</span></code></a></li>
+<li><a class="reference internal" href="#bambulabs_api.Printer.get_skipped_objects"><code class="docutils literal notranslate"><span class="pre">get_skipped_objects()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.get_state"><code class="docutils literal notranslate"><span class="pre">get_state()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.get_time"><code class="docutils literal notranslate"><span class="pre">get_time()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.home_printer"><code class="docutils literal notranslate"><span class="pre">home_printer()</span></code></a></li>
@@ -71,6 +70,7 @@
 <li><a class="reference internal" href="#bambulabs_api.Printer.set_filament_printer"><code class="docutils literal notranslate"><span class="pre">set_filament_printer()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.set_nozzle_temperature"><code class="docutils literal notranslate"><span class="pre">set_nozzle_temperature()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.set_print_speed"><code class="docutils literal notranslate"><span class="pre">set_print_speed()</span></code></a></li>
+<li><a class="reference internal" href="#bambulabs_api.Printer.skip_objects"><code class="docutils literal notranslate"><span class="pre">skip_objects()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.start_print"><code class="docutils literal notranslate"><span class="pre">start_print()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.stop_print"><code class="docutils literal notranslate"><span class="pre">stop_print()</span></code></a></li>
 <li><a class="reference internal" href="#bambulabs_api.Printer.turn_light_off"><code class="docutils literal notranslate"><span class="pre">turn_light_off()</span></code></a></li>
@@ -366,6 +366,20 @@ NOT IMPLEMENTED YET</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="bambulabs_api.Printer.get_skipped_objects">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_skipped_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_skipped_objects" title="Link to this definition"></a></dt>
+<dd><p>Get the current state of the printer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current state of the printer.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>PrintStatus</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="bambulabs_api.Printer.get_state">
 <span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.get_state" title="Link to this definition"></a></dt>
 <dd><p>Get the state of the printer.</p>
@@ -558,8 +572,25 @@ NOT IMPLEMENTED YET</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="bambulabs_api.Printer.skip_objects">
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">skip_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.skip_objects" title="Link to this definition"></a></dt>
+<dd><p>Skip Objects during printing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>obj_list</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – object list to skip objects.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>if publish command is successful</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="bambulabs_api.Printer.start_print">
-<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">start_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plate_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ams_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.start_print" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">bambulabs_api.Printer.</span></span><span class="sig-name descname"><span class="pre">start_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plate_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ams_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#bambulabs_api.Printer.start_print" title="Link to this definition"></a></dt>
 <dd><p>Start printing a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -569,6 +600,8 @@ NOT IMPLEMENTED YET</p>
 <li><p><strong>use_ams</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use the AMS system, by default True.</p></li>
 <li><p><strong>ams_mapping</strong> (<em>list</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The mapping of the filament trays to the plate numbers,
 by default [0].</p></li>
+<li><p><strong>None</strong> (<em>skip_objects</em><em> (</em><em>list</em><em>[</em><em>int</em><em>] </em><em>|</em>) – skip. Defaults to None.</p></li>
+<li><p><strong>optional</strong><strong>)</strong> (<em>List</em><em> of </em><em>gcode objects to</em>) – skip. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
