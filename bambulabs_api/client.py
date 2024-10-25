@@ -18,14 +18,23 @@ class Printer:
     """
     Client Class for connecting to the Bambulabs 3D printer
     """
-    def __init__(self, ip_address, access_code, serial):
+    def __init__(self, ip_address, access_code, serial, region="local", username="bblp", token=None):
         self.ip_address = ip_address
         self.access_code = access_code
         self.serial = serial
+        self.region = region
+        if region == "local":
+            self.mqtt_hostname = self.ip_address
+            self.mqtt_token = access_code
+        else:
+            self.mqtt_hostname = "cn.mqtt.bambulab.com" if region == "China" else "us.mqtt.bambulab.com"
+            self.mqtt_token = token
+        self.username = username
 
-        self.__printerMQTTClient = PrinterMQTTClient(self.ip_address,
-                                                     self.access_code,
-                                                     self.serial)
+        self.__printerMQTTClient = PrinterMQTTClient(hostname=self.mqtt_hostname,
+                                                     access=self.mqtt_token,
+                                                     printer_serial=self.serial,
+                                                     username=self.username)
         self.__printerCamera = PrinterCamera(self.ip_address,
                                              self.access_code)
         self.__printerFTPClient = PrinterFTPClient(self.ip_address,
@@ -38,6 +47,13 @@ class Printer:
         self.__printerMQTTClient.connect()
         self.__printerMQTTClient.start()
         self.__printerCamera.start()
+
+    def is_mqtt_connected(self) -> bool:
+        """
+        MQTT connection state
+        :return: bool
+        """
+        return self.__printerMQTTClient.connected
 
     def disconnect(self):
         """

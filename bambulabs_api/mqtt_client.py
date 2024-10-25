@@ -29,7 +29,10 @@ class PrinterMQTTClient:
         self._port = port
         self._timeout = timeout
 
+        self.connected = False
+
         self._client: mqtt.Client = mqtt.Client(CallbackAPIVersion.VERSION2)
+
         self._client.username_pw_set(username, access)
         self._client.tls_set(tls_version=ssl.PROTOCOL_TLS,
                              cert_reqs=ssl.CERT_NONE)
@@ -54,8 +57,7 @@ class PrinterMQTTClient:
         if "print" in doc:
             self._data |= doc["print"]
             logging.debug(self._data)
-
-    def _on_connect(self, client: mqtt.Client, serial, userdata, flags, rc) -> None:  # pylint: disable=unused-argument  # noqa
+    def _on_connect(self, client: mqtt.Client, userdata, flags, rc, properties) -> None:  # pylint: disable=unused-argument  # noqa
         """
         _on_connect Callback function for when the client
         receives a CONNACK response from the server.
@@ -72,6 +74,7 @@ class PrinterMQTTClient:
             The connection result
         """
         if rc == 0:
+            self.connected = True
             print("Connected successfully")
             client.subscribe(f"device/{self._printer_serial}/report")
         else:
