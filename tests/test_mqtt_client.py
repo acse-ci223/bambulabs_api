@@ -64,3 +64,45 @@ def test_nozzle_diameter():
 def test_get_firmware():
     assert mqtt.firmware_version() == "01.07.00.00"
     assert mqtt.printer_info.firmware_version == "01.07.00.00"
+
+
+def test_incremental_update_preserves_sibling_fields():
+    """A partial report must not wipe fields it does not mention."""
+    mqtt_ = bl.PrinterMQTTClient(hostname="", access="", printer_serial="")
+    mqtt_.manual_update(
+        {
+            "print": {
+                "gcode_state": "RUNNING",
+                "ams": {
+                    "ams_exist_bits": "1",
+                    "tray_exist_bits": "f",
+                    "ams": [{"id": "0", "tray": [{"id": "0"}]}],
+                },
+            },
+        }
+    )
+    # An incremental report mentioning only part of the ams object
+    mqtt_.manual_update(
+        {
+            "print": {
+                "ams": {
+                    "ams": [{"id": "0", "tray": [{"id": "0", "tray_color": "FF0000FF"}]}],
+                },
+            },
+        }
+    )
+
+    ams = mqtt_._data["print"]["ams"]  # noqa: SLF001
+    assert ams["ams_exist_bits"] == "1", "sibling field dropped by partial update"
+    assert ams["tray_exist_bits"] == "f", "sibling field dropped by partial update"
+    assert ams["ams"][0]["tray"][0]["tray_color"] == "FF0000FF", "update not applied"
+    assert mqtt_._data["print"]["gcode_state"] == "RUNNING"  # noqa: SLF001
+
+
+def test_update_replaces_scalars_and_lists():
+    """Lists and scalars are replaced, not merged."""
+    mqtt_ = bl.PrinterMQTTClient(hostname="", access="", printer_serial="")
+    mqtt_.manual_update({"print": {"gcode_state": "RUNNING", "s_obj": [1, 2]}})
+    mqtt_.manual_update({"print": {"gcode_state": "FINISH", "s_obj": [9]}})
+    assert mqtt_._data["print"]["gcode_state"] == "FINISH"  # noqa: SLF001
+    assert mqtt_._data["print"]["s_obj"] == [9]  # noqa: SLF001
