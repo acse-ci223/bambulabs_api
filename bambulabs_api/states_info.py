@@ -110,7 +110,7 @@ class GcodeState(str, Enum):
     PREPARING: The printer is preparing (File upload).
     RUNNING: The printer is running.
     PAUSED: The printer is paused.
-    FINISHED: The printer has finished.
+    FINISH: The printer has finished.
     UNKNOWN: The printer state is unknown.
     FAILED: The printer has failed.
     """
