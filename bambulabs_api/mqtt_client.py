@@ -57,6 +57,25 @@ def is_valid_gcode(line: str):
     return True
 
 
+def _deep_merge(target: dict[str, Any], updates: dict[str, Any]) -> None:
+    """
+    Recursively merge updates into target, in place
+
+    Nested dictionaries are merged key by key, so an incremental report does
+    not drop sibling fields it did not mention. Lists and scalars are replaced.
+
+    Args:
+        target (dict[str, Any]): The cached data, modified in place
+        updates (dict[str, Any]): The newly received data
+    """
+    for key, value in updates.items():
+        existing = target.get(key)
+        if isinstance(existing, dict) and isinstance(value, dict):
+            _deep_merge(existing, value)
+        else:
+            target[key] = value
+
+
 class PrinterMQTTClient:
     """
     Printer class for handling MQTT communication with the printer
@@ -195,10 +214,7 @@ class PrinterMQTTClient:
         self.on_message_handler(self, client, userdata, msg)
 
     def manual_update(self, doc: dict[str, Any]) -> None:
-        for k, v in doc.items():
-            if k not in self._data:
-                self._data[k] = {}
-            self._data[k] |= v
+        _deep_merge(self._data, doc)
         logger.debug(self._data)
 
         firmware_version = self.firmware_version()
