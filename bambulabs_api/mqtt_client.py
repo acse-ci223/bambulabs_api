@@ -470,7 +470,8 @@ class PrinterMQTTClient:
                         ams_mapping: list[int] = [0],
                         skip_objects: list[int] | None = None,
                         flow_calibration: bool = True,
-                        ) -> bool:
+                        bed_leveling: bool = True,
+        ) -> bool:
         """
         Start the print
 
@@ -500,7 +501,7 @@ class PrinterMQTTClient:
                     "command": "project_file",
                     "param": plate_location,
                     "file": filename,
-                    "bed_leveling": True,
+                    "bed_leveling": bool(bed_leveling),
                     "bed_type": "textured_plate",
                     "flow_cali": bool(flow_calibration),
                     "vibration_cali": True,
@@ -515,20 +516,19 @@ class PrinterMQTTClient:
 
     def set_onboard_printer_timelapse(self, enable: bool = True):
         """
-        Enable/disable the printer's onboard timelapse/video
-        functionality.
+        Enable/disable the printer's onboard timelapse/video functionality.
 
         Args:
-            enable (bool): object list to skip objects.
+            enable (bool): True to enable recording, False to disable it.
                 Defaults to True.
 
         Returns:
-            bool: if publish command is successful.
+            bool: True if the publish command is successful, False otherwise.
         """
         return self.__publish_command({
             "camera": {
                 "command": "ipcam_record_set",
-                "control": "disable" if not enable else "enable"
+                "control": "enable" if enable else "disable"
             }
         })
 
@@ -853,14 +853,12 @@ class PrinterMQTTClient:
         """
         Set the nozzle temperature. Note P1 firmware version above 01.06 does
         not support M104. M109 is used instead (set and wait for temperature).
-        To prevent long wait times, if temperature is set to below 40 deg cel,
+        To prevent long wait times, if temperature is set to below 60 deg cel,
         no temperature is set, override flag is provided to circumvent this.
 
         Args:
-            temperature (int): The temperature to set the bed to
+            temperature (int): The temperature to set the nozzle to
             override (bool): Whether to override guards. Default to False
-        Args:
-            temperature (int): temperature to set the nozzle to
 
         Returns:
             bool: success of setting the nozzle temperature
@@ -870,8 +868,8 @@ class PrinterMQTTClient:
         else:
             if temperature < 60 and not override:
                 logger.warning(
-                    "Attempting to set low bed temperature not recommended. "
-                    "Set override flag to true to if you're sure you want to "
+                    "Attempting to set low nozzle temperature not recommended. "
+                    "Set override flag to true if you're sure you want to "
                     f"run M109 S{temperature};"
                 )
                 return False

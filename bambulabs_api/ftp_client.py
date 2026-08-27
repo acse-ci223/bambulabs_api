@@ -102,8 +102,19 @@ class PrinterFTPClient:
 
     @connect_and_run
     def upload_file(self, file: BinaryIO, file_path: str) -> str:
-        return self.ftps.storbinary(f'STOR {file_path}', file, blocksize=32768,
-                                 callback=lambda x: logger.debug(f"Uploaded {x} bytes"))   # noqa  # pylint: disable=logging-fstring-interpolation
+        total_bytes = 0
+        def upload_callback(data: bytes):
+            nonlocal total_bytes
+            total_bytes += len(data)
+            logger.info(f"Total uploaded {total_bytes} bytes")
+            logger.debug(f"Uploaded {data} bytes")
+
+        return self.ftps.storbinary(
+            f'STOR {file_path}', 
+            file, 
+            blocksize=32768,
+            callback=upload_callback
+        )
 
     @connect_and_run
     def list_directory(self, path: str | None = None) -> tuple[str, list[str]]:
